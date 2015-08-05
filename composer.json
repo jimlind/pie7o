@@ -1,0 +1,21 @@
+{
+    "name": "jimlind/pie7o",
+    "description": "Simple PSR7 Tweeter",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jim Lind",
+            "email": "jimlind@me.com"
+        }
+    ],
+
+    "autoload": {
+        "psr-4": {
+            "JimLind\\Pie7o\\": "src/"
+        }
+    },
+
+    "require": {
+        "guzzlehttp/guzzle": "~6.0"
+    }
+}
