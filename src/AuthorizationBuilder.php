@@ -6,12 +6,12 @@ class AuthorizationBuilder
     /**
      * @var string
      */
-    protected $oathToken = null;
+    protected $accessToken = null;
 
     /**
      * @var string
      */
-    protected $oathTokenSecret = null;
+    protected $accessTokenSecret = null;
 
     /**
      * @var string
@@ -30,8 +30,8 @@ class AuthorizationBuilder
     public function __construct(array $settingList)
     {
         $allSettingsAvailalable = isset(
-            $settingList['oauthToken'],
-            $settingList['oauthTokenSecret'],
+            $settingList['accessToken'],
+            $settingList['accessTokenSecret'],
             $settingList['consumerKey'],
             $settingList['consumerSecret']
         );
@@ -40,10 +40,10 @@ class AuthorizationBuilder
             throw new \Exception('Missing a setting for authorization.');
         }
 
-        $this->oathToken       = $settingList['oauthToken'];
-        $this->oathTokenSecret = $settingList['oauthTokenSecret'];
-        $this->consumerKey     = $settingList['consumerKey'];
-        $this->consumerSecret  = $settingList['consumerSecret'];
+        $this->accessToken       = $settingList['accessToken'];
+        $this->accessTokenSecret = $settingList['accessTokenSecret'];
+        $this->consumerKey       = $settingList['consumerKey'];
+        $this->consumerSecret    = $settingList['consumerSecret'];
     }
 
     public function build($method, $uri, array $postData)
@@ -66,7 +66,7 @@ class AuthorizationBuilder
             'oauth_nonce'            => time(),
             'oauth_signature_method' => 'HMAC-SHA1',
             'oauth_timestamp'        => time(),
-            'oauth_token'            => $this->oathToken,
+            'oauth_token'            => $this->accessToken,
             'oauth_version'          => '1.0',
         ];
 
@@ -92,7 +92,7 @@ class AuthorizationBuilder
 
     protected function buildKey()
     {
-        $valueList     = [$this->consumerSecret, $this->oathTokenSecret];
+        $valueList     = [$this->consumerSecret, $this->accessTokenSecret];
         $encodedList = array_map('rawurlencode', $valueList);
 
         return implode('&', $encodedList);
