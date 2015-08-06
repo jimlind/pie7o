@@ -5,37 +5,64 @@ use Psr\Http\Message\StreamInterface;
 
 class Tweet
 {
-    protected $text;
+    /**
+     * @var StreamInterface
+     */
+    protected $messageStream;
 
-    protected $imageStream;
+    /**
+     * @var StreamInterface
+     */
+    protected $mediaStream;
 
+    /**
+     * @var int
+     */
     protected $mediaId;
 
-    public function setText($inputText)
+    /**
+     * @param StreamInterface $messageStream
+     */
+    public function setMessage(StreamInterface $messageStream)
     {
-        $this->text = $inputText;
+        $this->messageStream = $messageStream;
     }
 
-    public function getText()
+    /**
+     * @return StreamInterface
+     */
+    public function getMessage()
     {
-        return $this->text;
+        return $this->messageStream;
     }
 
-    public function setImage(StreamInterface $stream)
+    /**
+     * @param StreamInterface $mediaStream
+     */
+    public function setMedia(StreamInterface $mediaStream)
     {
-        $this->imageStream = $stream;
+        $this->mediaStream = $mediaStream;
     }
 
-    public function getImage()
+    /**
+     * @return StreamInterface
+     */
+    public function getMedia()
     {
-        return $this->imageStream;
+        return $this->mediaStream;
     }
 
+    /**
+     * @param int $mediaId
+     */
     public function setMediaId($mediaId)
     {
         $this->mediaId = intval($mediaId);
     }
 
+    /**
+     * @return int
+     */
     public function getMediaId()
     {
         return $this->mediaId;

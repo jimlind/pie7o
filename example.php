@@ -8,12 +8,17 @@ $settingList = [
     'consumerSecret'    => 'YOUR CONSUMER SECRET',
 ];
 
+$messageHandle = fopen('php://temp', 'r+');
+$messageStream = new GuzzleHttp\Psr7\Stream($messageHandle);
+$messageStream->write('This is a pictures of cats.');
+$messageStream->rewind();
+
+$mediaHandle = fopen('./cat.jpg', 'r');
+$mediaStream = new GuzzleHttp\Psr7\Stream($mediaHandle);
+
 $tweet = new JimLind\Pie7o\Tweet();
-$tweet->setText('This is a pictures of cats.');
+$tweet->setMessage($messageStream);
+$tweet->setMedia($mediaStream);
 
-$imageHandle = fopen('/tmp/cats.jpg', 'r');
-$imageStream = new GuzzleHttp\Psr7\Stream($imageHandle);
-$tweet->setImage($imageStream);
-
-$tweeter  = new JimLind\Pie7o\Tweeter($settingList);
+$tweeter = new JimLind\Pie7o\Tweeter($settingList);
 $tweeter->tweet($tweet);

@@ -6,7 +6,6 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Uri;
 
-
 class MediaUploader
 {
     const METHOD      = 'POST';
@@ -27,7 +26,7 @@ class MediaUploader
     /**
      * @return GuzzleHttp\Psr7\Response
      */
-    public function upload($tweet)
+    public function upload(Tweet $tweet)
     {
         $originalUri = new Uri();
         $updatedUri  = $originalUri
@@ -35,8 +34,8 @@ class MediaUploader
             ->withHost($this::HOST)
             ->withPath($this::UPLOAD_PATH);
 
-        $imageStream     = $tweet->getImage();
-        $postData        = ['media_data' => base64_encode($imageStream->getContents())];
+        $mediaStream     = $tweet->getMedia();
+        $postData        = ['media_data' => base64_encode($mediaStream->getContents())];
         $authorization   = $this->authorizationBuilder->build($this::METHOD, (string) $updatedUri, $postData);
         $originalRequest = new Request($this::METHOD, $updatedUri);
         $updatedRequest  = $originalRequest->withHeader('Authorization', $authorization);

@@ -35,10 +35,10 @@ class StatusUpdater
             ->withPath($this::UPDATE_PATH);
 
         $postData = [
-            'status' => $tweet->getText(),
+            'status' => $tweet->getMessage()->getContents(),
             'media_ids' => $tweet->getMediaId(),
         ];
-        
+
         $authorization   = $this->authorizationBuilder->build($this::METHOD, (string) $updatedUri, $postData);
         $originalRequest = new Request($this::METHOD, $updatedUri);
         $updatedRequest  = $originalRequest->withHeader('Authorization', $authorization);
