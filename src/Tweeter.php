@@ -3,18 +3,25 @@ namespace JimLind\Pie7o;
 
 class Tweeter
 {
+    /**
+     *
+     * @var StatusUpdater
+     */
     protected $statusUpdater = null;
+    /**
+     *
+     * @var MediaUploader
+     */
     protected $mediaUploader = null;
 
     /**
-     * @param string[] $settingList
+     * @param StatusUpdater $statusUpdater
+     * @param MediaUploader $mediaUploader
      */
-    public function __construct(array $settingList)
+    public function __construct(StatusUpdater $statusUpdater, MediaUploader $mediaUploader)
     {
-        $authorizationBuilder = new AuthorizationBuilder($settingList);
-
-        $this->statusUpdater = new StatusUpdater($authorizationBuilder);
-        $this->mediaUploader = new MediaUploader($authorizationBuilder);
+        $this->statusUpdater = $statusUpdater;
+        $this->mediaUploader = $mediaUploader;
     }
 
     /**
@@ -25,10 +32,11 @@ class Tweeter
     public function tweet(Tweet $tweet)
     {
         $uploadSuccess = $this->mediaUploader->upload($tweet);
+        var_dump($uploadSuccess);
 
         $updateResponse = $this->statusUpdater->update($tweet);
 
-        echo $updateResponse->getStatusCode();
+        var_dump($updateResponse->getStatusCode());
     }
 
 }
