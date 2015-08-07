@@ -34,10 +34,7 @@ class StatusUpdater
             ->withHost($this::HOST)
             ->withPath($this::UPDATE_PATH);
 
-        $postData = [
-            'status' => $tweet->getMessage()->getContents(),
-            'media_ids' => $tweet->getMediaId(),
-        ];
+        $postData = $this->getPostData($tweet);
 
         $authorization   = $this->authorizationBuilder->build($this::METHOD, (string) $updatedUri, $postData);
         $originalRequest = new Request($this::METHOD, $updatedUri);
@@ -52,6 +49,22 @@ class StatusUpdater
         }
 
         return $response;
+    }
+
+    private function getPostData(Tweet $tweet) {
+        $status = $tweet->getMessage()->getContents();
+
+        if (0 === $tweet->getMediaId()) {
+            return [
+                'status' => substr($status, 0, 140),
+            ];
+        }
+
+        return [
+            'status' => substr($status, 0, 110),
+            'media_ids' => $tweet->getMediaId(),
+        ];
+
     }
 
 }

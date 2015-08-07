@@ -18,7 +18,7 @@ class Tweet
     /**
      * @var int
      */
-    protected $mediaId;
+    protected $mediaId = 0;
 
     /**
      * @param StreamInterface $messageStream
