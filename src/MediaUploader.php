@@ -6,6 +6,9 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Uri;
 
+/**
+ * Upload media with the Twitter API
+ */
 class MediaUploader
 {
     const METHOD      = 'POST';
@@ -24,6 +27,7 @@ class MediaUploader
     }
 
     /**
+     * @param Tweet $tweet
      * @return GuzzleHttp\Psr7\Response
      */
     public function upload(Tweet $tweet)
@@ -44,7 +48,7 @@ class MediaUploader
         $options  = ['form_params' => $postData];
         try {
             $response = $client->send($updatedRequest, $options);
-        } catch(ClientException $exception) {
+        } catch (ClientException $exception) {
             $response = $exception->getResponse();
         }
 
@@ -53,6 +57,7 @@ class MediaUploader
         }
 
         $this->handleMediaId($response, $tweet);
+
         return true;
     }
 
@@ -61,7 +66,6 @@ class MediaUploader
         $bodyString = $response->getBody();
         $bodyJson   = json_decode($bodyString);
 
-        $tweet->setMediaId($bodyJson->media_id);
+        $tweet->setMediaId($bodyJson->{'media_id'});
     }
-
 }

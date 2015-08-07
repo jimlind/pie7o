@@ -3,6 +3,9 @@ namespace JimLind\Pie7o;
 
 use Psr\Http\Message\StreamInterface;
 
+/**
+ * Contains all the data needed for a tweet.
+ */
 class Tweet
 {
     /**

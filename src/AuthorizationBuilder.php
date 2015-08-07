@@ -1,6 +1,9 @@
 <?php
 namespace JimLind\Pie7o;
 
+/**
+ * Builds an Oauth 1 string for the Twitter API
+ */
 class AuthorizationBuilder
 {
     /**
@@ -46,6 +49,12 @@ class AuthorizationBuilder
         $this->consumerSecret    = $settingList['consumerSecret'];
     }
 
+    /**
+     * @param string $method
+     * @param string $uri
+     * @param array  $postData
+     * @return string
+     */
     public function build($method, $uri, array $postData)
     {
         $rawAuthDataList     = $this->buildValueList($method, $uri, $postData);

@@ -3,6 +3,9 @@ namespace JimLind\Pie7o;
 
 use Psr\Http\Message\StreamInterface;
 
+/**
+ * Uploads images and updates statuses as required.
+ */
 class Tweeter
 {
     /**
@@ -40,7 +43,7 @@ class Tweeter
         }
 
         $updateResponse = $this->statusUpdater->update($tweet);
+
         return (200 === $updateResponse->getStatusCode());
     }
-
 }

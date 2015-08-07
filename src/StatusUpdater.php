@@ -6,6 +6,9 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Uri;
 
+/**
+ * Update a status with the Twitter API
+ */
 class StatusUpdater
 {
     const METHOD      = 'POST';
@@ -24,6 +27,7 @@ class StatusUpdater
     }
 
     /**
+     * @param Tweet $tweet
      * @return GuzzleHttp\Psr7\Response
      */
     public function update(Tweet $tweet)
@@ -44,14 +48,15 @@ class StatusUpdater
         $options  = ['form_params' => $postData];
         try {
             $response = $client->send($updatedRequest, $options);
-        } catch(ClientException $exception) {
+        } catch (ClientException $exception) {
             $response = $exception->getResponse();
         }
 
         return $response;
     }
 
-    private function getPostData(Tweet $tweet) {
+    private function getPostData(Tweet $tweet)
+    {
         $status = $tweet->getMessage()->getContents();
 
         if (0 === $tweet->getMediaId()) {
@@ -66,5 +71,4 @@ class StatusUpdater
         ];
 
     }
-
 }
