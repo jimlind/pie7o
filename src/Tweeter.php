@@ -1,15 +1,16 @@
 <?php
 namespace JimLind\Pie7o;
 
+use Psr\Http\Message\StreamInterface;
+
 class Tweeter
 {
     /**
-     *
      * @var StatusUpdater
      */
     protected $statusUpdater = null;
+
     /**
-     *
      * @var MediaUploader
      */
     protected $mediaUploader = null;
@@ -27,16 +28,19 @@ class Tweeter
     /**
      *
      * @param Tweet $tweet
-     * @return GuzzleHttp\Psr7\Response
+     * @return boolean
      */
     public function tweet(Tweet $tweet)
     {
-        $uploadSuccess = $this->mediaUploader->upload($tweet);
-        var_dump($uploadSuccess);
+        if ($tweet->getMedia() instanceof StreamInterface) {
+            $uploadSuccess = $this->mediaUploader->upload($tweet);
+            if (false === $uploadSuccess) {
+                return false;
+            }
+        }
 
         $updateResponse = $this->statusUpdater->update($tweet);
-
-        var_dump($updateResponse->getStatusCode());
+        return (200 === $updateResponse->getStatusCode());
     }
 
 }

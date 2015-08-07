@@ -26,4 +26,6 @@ $tweet->setMessage($messageStream);
 $tweet->setMedia($mediaStream);
 
 $tweeter = new JimLind\Pie7o\Tweeter($statusUpdater, $mediaUploader);
-$tweeter->tweet($tweet);
+$result  = $tweeter->tweet($tweet);
+
+echo $result.PHP_EOL;
