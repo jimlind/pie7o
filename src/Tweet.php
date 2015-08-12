@@ -1,4 +1,5 @@
 <?php
+
 namespace JimLind\Pie7o;
 
 use Psr\Http\Message\StreamInterface;
