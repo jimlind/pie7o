@@ -4,44 +4,23 @@ namespace JimLind\Pie7o;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\Psr7\Uri;
 
 /**
  * Update a status with the Twitter API
  */
-class StatusUpdater
+class StatusUpdater extends TwitterApiCaller
 {
-    const METHOD      = 'POST';
-    const SCHEME      = 'https';
-    const HOST        = 'api.twitter.com';
-    const UPDATE_PATH = '1.1/statuses/update.json';
-
-    protected $authorizationBuilder = null;
-
-    /**
-     * @param AuthorizationBuilder $authorizationBuilder
-     */
-    public function __construct(AuthorizationBuilder $authorizationBuilder)
-    {
-        $this->authorizationBuilder = $authorizationBuilder;
-    }
-
     /**
      * @param Tweet $tweet
      * @return GuzzleHttp\Psr7\Response
      */
     public function update(Tweet $tweet)
     {
-        $originalUri = new Uri();
-        $updatedUri  = $originalUri
-            ->withScheme($this::SCHEME)
-            ->withHost($this::HOST)
-            ->withPath($this::UPDATE_PATH);
-
+        $uri      = $this->getURI();
         $postData = $this->getPostData($tweet);
 
-        $authorization   = $this->authorizationBuilder->build($this::METHOD, (string) $updatedUri, $postData);
-        $originalRequest = new Request($this::METHOD, $updatedUri);
+        $authorization   = $this->authorizationBuilder->build($this->apiMethod, (string) $uri, $postData);
+        $originalRequest = new Request($this->apiMethod, $uri);
         $updatedRequest  = $originalRequest->withHeader('Authorization', $authorization);
 
         $client   = new Client();

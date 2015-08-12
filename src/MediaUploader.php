@@ -4,27 +4,21 @@ namespace JimLind\Pie7o;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\Psr7\Uri;
 
 /**
  * Upload media with the Twitter API
  */
-class MediaUploader
+class MediaUploader extends TwitterApiCaller
 {
-    const METHOD      = 'POST';
-    const SCHEME      = 'https';
-    const HOST        = 'upload.twitter.com';
-    const UPLOAD_PATH = '1.1/media/upload.json';
-
-    protected $authorizationBuilder = null;
+    /**
+     * @var string
+     */
+    protected $apiHost = 'upload.twitter.com';
 
     /**
-     * @param AuthorizationBuilder $authorizationBuilder
+     * @var string
      */
-    public function __construct(AuthorizationBuilder $authorizationBuilder)
-    {
-        $this->authorizationBuilder = $authorizationBuilder;
-    }
+    protected $apiPath = '1.1/media/upload.json';
 
     /**
      * @param Tweet $tweet
@@ -32,16 +26,12 @@ class MediaUploader
      */
     public function upload(Tweet $tweet)
     {
-        $originalUri = new Uri();
-        $updatedUri  = $originalUri
-            ->withScheme($this::SCHEME)
-            ->withHost($this::HOST)
-            ->withPath($this::UPLOAD_PATH);
+        $uri = $this->getURI();
 
         $mediaStream     = $tweet->getMedia();
         $postData        = ['media_data' => base64_encode($mediaStream->getContents())];
-        $authorization   = $this->authorizationBuilder->build($this::METHOD, (string) $updatedUri, $postData);
-        $originalRequest = new Request($this::METHOD, $updatedUri);
+        $authorization   = $this->authorizationBuilder->build($this->apiMethod, (string) $uri, $postData);
+        $originalRequest = new Request($this->apiMethod, $uri);
         $updatedRequest  = $originalRequest->withHeader('Authorization', $authorization);
 
         $client   = new Client();
