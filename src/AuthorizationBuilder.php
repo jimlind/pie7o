@@ -1,4 +1,5 @@
 <?php
+
 namespace JimLind\Pie7o;
 
 /**
@@ -9,22 +10,22 @@ class AuthorizationBuilder
     /**
      * @var string
      */
-    protected $accessToken = null;
+    protected $accessToken;
 
     /**
      * @var string
      */
-    protected $accessTokenSecret = null;
+    protected $accessTokenSecret;
 
     /**
      * @var string
      */
-    protected $consumerKey = null;
+    protected $consumerKey;
 
     /**
      * @var string
      */
-    protected $consumerSecret = null;
+    protected $consumerSecret;
 
     /**
      * @param array $settingList
