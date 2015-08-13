@@ -3,7 +3,6 @@ namespace JimLind\Pie7o;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
-use GuzzleHttp\Psr7\Request;
 
 /**
  * Upload media with the Twitter API
@@ -26,16 +25,12 @@ class MediaUploader extends TwitterApiCaller
      */
     public function upload(Tweet $tweet)
     {
-        $uri = $this->getURI();
+        $client = new Client();
 
-        $authorization   = $this->authorizationBuilder->build($this->apiMethod, (string) $uri, []);
-        $originalRequest = new Request($this->apiMethod, $uri);
-        $updatedRequest  = $originalRequest->withHeader('Authorization', $authorization);
-
-        $client   = new Client();
-        $options  = $this->getOptions($tweet);
+        $request = $this->buildRequest([]);
+        $options = $this->getOptions($tweet);
         try {
-            $response = $client->send($updatedRequest, $options);
+            $response = $client->send($request, $options);
         } catch (ClientException $exception) {
             $response = $exception->getResponse();
         }
@@ -52,6 +47,7 @@ class MediaUploader extends TwitterApiCaller
     protected function getOptions(Tweet $tweet)
     {
         $mediaStream = $tweet->getMedia();
+        $mediaStream->rewind();
         $file = [
             'name' => 'media',
             'contents' => $mediaStream->getContents(),

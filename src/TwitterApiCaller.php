@@ -2,6 +2,7 @@
 
 namespace JimLind\Pie7o;
 
+use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Uri;
 
 /**
@@ -22,12 +23,12 @@ class TwitterApiCaller {
     /**
      * @var string
      */
-    protected $apiHost = 'api.twitter.com';
+    protected $apiHost = '';
 
     /**
      * @var string
      */
-    protected $apiPath = '1.1/statuses/update.json';
+    protected $apiPath = '';
 
     /**
      * @var AuthorizationBuilder
@@ -44,9 +45,23 @@ class TwitterApiCaller {
 
     /**
      *
+     * @param array $postData
+     * @return type
+     */
+    protected function buildRequest(array $postData)
+    {
+        $uri = $this->buildURI();
+
+        $authorization   = $this->authorizationBuilder->build($this->apiMethod, (string) $uri, $postData);
+        $originalRequest = new Request($this->apiMethod, $uri);
+        return $originalRequest->withHeader('Authorization', $authorization);
+    }
+
+    /**
+     *
      * @return Uri
      */
-    protected function getURI()
+    protected function buildURI()
     {
         $uri = new Uri();
         return $uri->withScheme($this->apiScheme)

@@ -11,22 +11,29 @@ use GuzzleHttp\Psr7\Request;
 class StatusUpdater extends TwitterApiCaller
 {
     /**
+     * @var string
+     */
+    protected $apiHost = 'api.twitter.com';
+
+    /**
+     * @var string
+     */
+    protected $apiPath = '1.1/statuses/update.json';
+
+    /**
      * @param Tweet $tweet
      * @return GuzzleHttp\Psr7\Response
      */
     public function update(Tweet $tweet)
     {
-        $uri      = $this->getURI();
+        $client = new Client();
+
         $postData = $this->getPostData($tweet);
-
-        $authorization   = $this->authorizationBuilder->build($this->apiMethod, (string) $uri, $postData);
-        $originalRequest = new Request($this->apiMethod, $uri);
-        $updatedRequest  = $originalRequest->withHeader('Authorization', $authorization);
-
-        $client   = new Client();
+        $request  = $this->buildRequest($postData);
         $options  = ['form_params' => $postData];
+
         try {
-            $response = $client->send($updatedRequest, $options);
+            $response = $client->send($request, $options);
         } catch (ClientException $exception) {
             $response = $exception->getResponse();
         }
@@ -36,7 +43,10 @@ class StatusUpdater extends TwitterApiCaller
 
     protected function getPostData(Tweet $tweet)
     {
-        $status = $tweet->getMessage()->getContents();
+        $message = $tweet->getMessage();
+        $message->rewind();
+
+        $status = $message->getContents();
 
         if (0 === $tweet->getMediaId()) {
             return [
