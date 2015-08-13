@@ -34,7 +34,7 @@ class StatusUpdater extends TwitterApiCaller
         return $response;
     }
 
-    private function getPostData(Tweet $tweet)
+    protected function getPostData(Tweet $tweet)
     {
         $status = $tweet->getMessage()->getContents();
 
