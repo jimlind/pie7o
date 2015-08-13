@@ -34,6 +34,11 @@ the Z with a 7 means you get a unique name and a reference to the PSR-7 usage.
 If there is ever a reason that two humans might want to mention this library via voice I'd be
 shocked.
 
+#### Anything else?
+
+I don't base64 encode the images before uploading them. A lot of other libraries I looked at were
+doing that. It's not hard to send the binaries, you just have to read the Twitter documentation.
+
 ## Code Quality Metrics
 
 #### 100% Code Coverage (Eventually...)
