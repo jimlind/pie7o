@@ -28,14 +28,12 @@ class MediaUploader extends TwitterApiCaller
     {
         $uri = $this->getURI();
 
-        $mediaStream     = $tweet->getMedia();
-        $postData        = ['media_data' => base64_encode($mediaStream->getContents())];
-        $authorization   = $this->authorizationBuilder->build($this->apiMethod, (string) $uri, $postData);
+        $authorization   = $this->authorizationBuilder->build($this->apiMethod, (string) $uri, []);
         $originalRequest = new Request($this->apiMethod, $uri);
         $updatedRequest  = $originalRequest->withHeader('Authorization', $authorization);
 
         $client   = new Client();
-        $options  = ['form_params' => $postData];
+        $options  = $this->getOptions($tweet);
         try {
             $response = $client->send($updatedRequest, $options);
         } catch (ClientException $exception) {
@@ -49,6 +47,17 @@ class MediaUploader extends TwitterApiCaller
         $this->handleMediaId($response, $tweet);
 
         return true;
+    }
+
+    protected function getOptions(Tweet $tweet)
+    {
+        $mediaStream = $tweet->getMedia();
+        $file = [
+            'name' => 'media',
+            'contents' => $mediaStream->getContents(),
+        ];
+
+        return ['multipart' => [$file]];
     }
 
     protected function handleMediaId($response, $tweet)
