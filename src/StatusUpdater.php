@@ -1,8 +1,6 @@
 <?php
 namespace JimLind\Pie7o;
 
-use GuzzleHttp\Exception\ClientException;
-
 /**
  * Update a status with the Twitter API
  */
@@ -24,13 +22,7 @@ class StatusUpdater extends TwitterApiCaller
      */
     public function update(Tweet $tweet)
     {
-        try {
-            $response = $this->sendTwitterRequest($tweet);
-        } catch (ClientException $exception) {
-            $response = $exception->getResponse();
-        }
-
-        return $response;
+        return $this->sendTwitterRequest($tweet);;
     }
 
     protected function getOptions(Tweet $tweet) {

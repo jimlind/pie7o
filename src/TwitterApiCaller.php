@@ -3,6 +3,7 @@
 namespace JimLind\Pie7o;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\BadResponseException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Uri;
@@ -58,7 +59,15 @@ class TwitterApiCaller {
         $request  = $this->buildRequest($postData);
         $options  = $this->getOptions($tweet);
 
-        return $client->send($request, $options);
+        try {
+            $response = $client->send($request, $options);
+        } catch (BadResponseException $requestException) {
+            $response = $requestException->getResponse();
+        } catch (\Exception $exception) {
+            $response = new Response(0, [], $exception->getMessage());
+        }
+
+        return $response;
     }
 
     /**
@@ -66,7 +75,7 @@ class TwitterApiCaller {
      * @param Tweet $tweet
      * @return mixed[]
      */
-    protected function getPostData(Tweet $tweet)
+    protected function getPostData()
     {
         return [];
     }
@@ -76,7 +85,7 @@ class TwitterApiCaller {
      * @param Tweet $tweet
      * @return mixed[]
      */
-    protected function getOptions(Tweet $tweet)
+    protected function getOptions()
     {
         return [];
     }

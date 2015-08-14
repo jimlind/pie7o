@@ -1,8 +1,6 @@
 <?php
 namespace JimLind\Pie7o;
 
-use GuzzleHttp\Exception\ClientException;
-
 /**
  * Upload media with the Twitter API
  */
@@ -24,11 +22,7 @@ class MediaUploader extends TwitterApiCaller
      */
     public function upload(Tweet $tweet)
     {
-        try {
-            $response = $this->sendTwitterRequest($tweet);
-        } catch (ClientException $exception) {
-            $response = $exception->getResponse();
-        }
+        $response = $this->sendTwitterRequest($tweet);
 
         if (200 !== $response->getStatusCode()) {
             return false;
