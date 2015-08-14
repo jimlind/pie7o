@@ -1,6 +1,8 @@
 <?php
 namespace JimLind\Pie7o;
 
+use GuzzleHttp\Psr7\Response;
+
 /**
  * Upload media with the Twitter API
  */
@@ -17,22 +19,26 @@ class MediaUploader extends TwitterApiCaller
     protected $apiPath = '1.1/media/upload.json';
 
     /**
+     * 
      * @param Tweet $tweet
-     * @return GuzzleHttp\Psr7\Response
+     * @return Response
      */
     public function upload(Tweet $tweet)
     {
         $response = $this->sendTwitterRequest($tweet);
 
-        if (200 !== $response->getStatusCode()) {
-            return false;
+        if (200 === $response->getStatusCode()) {
+            $this->handleResponse($response, $tweet);
         }
 
-        $this->handleMediaId($response, $tweet);
-
-        return true;
+        return $response;
     }
 
+    /**
+     *
+     * @param Tweet $tweet
+     * @return mixed[]
+     */
     protected function getOptions(Tweet $tweet)
     {
         $mediaStream = $tweet->getMedia();
@@ -45,7 +51,12 @@ class MediaUploader extends TwitterApiCaller
         return ['multipart' => [$file]];
     }
 
-    protected function handleMediaId($response, $tweet)
+    /**
+     *
+     * @param Response $response
+     * @param Tweet $tweet
+     */
+    protected function handleResponse(Response $response, Tweet $tweet)
     {
         $bodyString = $response->getBody();
         $bodyJson   = json_decode($bodyString);
