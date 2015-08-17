@@ -47,7 +47,7 @@ composer install
 vendor/bin/phpunit --coverage-text
 ```
 
-#### 100% Code Sniffed
+#### 100% Code Sniffed  (Eventually...)
 ```sh
 composer install
 bash sniff.sh
