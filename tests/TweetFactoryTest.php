@@ -34,7 +34,7 @@ class TweetFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $filePath = (string) rand();
 
-        $fileExistsSpy = new Spy('JimLind\Pie7o', 'file_exists', [$this, 'returnFalse']);
+        $fileExistsSpy = new Spy('JimLind\Pie7o', 'file_exists', function(){return false;});
         $fileExistsSpy->enable();
 
         $tweet = TweetFactory::buildTweet('', $filePath);
@@ -52,7 +52,7 @@ class TweetFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $filePath = (string) rand();
 
-        $fileExistsSpy = new Spy('JimLind\Pie7o', 'file_exists', [$this, 'returnTrue']);
+        $fileExistsSpy = new Spy('JimLind\Pie7o', 'file_exists', function(){return true;});
         $fileExistsSpy->enable();
 
         $fileOpenSpy = new Spy('JimLind\Pie7o', 'fopen', [$this, 'returnFileHandle']);
@@ -72,16 +72,6 @@ class TweetFactoryTest extends \PHPUnit_Framework_TestCase
 
         $fileExistsSpy->disable();
         $fileOpenSpy->disable();
-    }
-
-    public function returnTrue()
-    {
-        return true;
-    }
-
-    public function returnFalse()
-    {
-        return false;
     }
 
     public function returnFileHandle($input)

@@ -3,12 +3,10 @@
 namespace JimLind\Pie7o\Tests;
 
 use JimLind\Pie7o\AuthorizationBuilder;
+use phpmock\Mock;
 
 class AuthorizationBuilderTest extends \PHPUnit_Framework_TestCase
 {
-    // Trait for mocking built-in functions
-    use \phpmock\phpunit\PHPMock;
-
     /**
      * @expectedException        Exception
      * @expectedExceptionMessage Missing a setting for authorization.
@@ -42,8 +40,8 @@ class AuthorizationBuilderTest extends \PHPUnit_Framework_TestCase
      */
     public function testAuthorizationBuilder($time, $expected)
     {
-        $mockTime = $this->getFunctionMock('JimLind\Pie7o', 'time');
-        $mockTime->expects($this->exactly(2))->willReturn($time);
+        $mockTime = new Mock('JimLind\Pie7o', 'time', function() use ($time) {return $time;});
+        $mockTime->enable();
 
         $settingList = [
             'accessToken'       => 'YOUR ACCESS TOKEN',
@@ -60,6 +58,7 @@ class AuthorizationBuilderTest extends \PHPUnit_Framework_TestCase
         $actual = $builder->build($method, $uri, $post);
 
         $this->assertEquals($expected, $actual);
+        $mockTime->disable();
     }
 
     public function authorizationBuilderProvider()
