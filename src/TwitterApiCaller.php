@@ -110,8 +110,8 @@ class TwitterApiCaller {
      */
     protected function buildURI()
     {
-        $uri = new Uri();
-        return $uri->withScheme($this->apiScheme)
+        return (new Uri)
+            ->withScheme($this->apiScheme)
             ->withHost($this->apiHost)
             ->withPath($this->apiPath);
     }
