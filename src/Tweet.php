@@ -5,7 +5,7 @@ namespace JimLind\Pie7o;
 use Psr\Http\Message\StreamInterface;
 
 /**
- * Contains all the data needed for a tweet.
+ * Immutable data object for all Tweet information
  */
 class Tweet
 {
@@ -26,10 +26,15 @@ class Tweet
 
     /**
      * @param StreamInterface $messageStream
+     *
+     * @return Tweet
      */
-    public function setMessage(StreamInterface $messageStream)
+    public function withMessage(StreamInterface $messageStream)
     {
-        $this->messageStream = $messageStream;
+        $new = clone $this;
+        $new->messageStream = $messageStream;
+
+        return $new;
     }
 
     /**
@@ -42,10 +47,15 @@ class Tweet
 
     /**
      * @param StreamInterface $mediaStream
+     *
+     * @return Tweet
      */
-    public function setMedia(StreamInterface $mediaStream)
+    public function withMedia(StreamInterface $mediaStream)
     {
-        $this->mediaStream = $mediaStream;
+        $new = clone $this;
+        $new->mediaStream = $mediaStream;
+
+        return $new;
     }
 
     /**
@@ -58,10 +68,15 @@ class Tweet
 
     /**
      * @param int $mediaId
+     *
+     * @return Tweet
      */
-    public function setMediaId($mediaId)
+    public function withMediaId($mediaId)
     {
-        $this->mediaId = intval($mediaId);
+        $new = clone $this;
+        $new->mediaId = intval($mediaId);
+
+        return $new;
     }
 
     /**

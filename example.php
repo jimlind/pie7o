@@ -18,7 +18,7 @@ $mediaUploader = new JimLind\Pie7o\MediaUploader($authorizationBuilder);
 $tweeter       = new JimLind\Pie7o\Tweeter($statusUpdater, $mediaUploader);
 
 /**
- * Create a Tweet object the hard way
+ * Create a Tweet object the fun way
  */
 $messageHandle = fopen('php://temp', 'r+');
 $messageStream = new GuzzleHttp\Psr7\Stream($messageHandle);
@@ -28,14 +28,14 @@ $messageStream->rewind();
 $mediaHandle = fopen('./cat.jpg', 'r');
 $mediaStream = new GuzzleHttp\Psr7\Stream($mediaHandle);
 
-$hardTweet = new JimLind\Pie7o\Tweet();
-$hardTweet->setMessage($messageStream);
-$hardTweet->setMedia($mediaStream);
+$funTweet (new JimLind\Pie7o\Tweet)
+    ->withMessage($messageStream)
+    ->withMedia($mediaStream);
 
 /**
  * Tweet and check results
  */
-$hardResult = $tweeter->tweet($hardTweet);
+$hardResult = $tweeter->tweet($funTweet);
 if ($hardResult) {
     echo 'The first Tweet was successfull.'.PHP_EOL;
 } else {

@@ -12,14 +12,13 @@ class TweetFactory {
      */
     public static function buildTweet($message = '', $mediaPath = null)
     {
-        $tweet = new Tweet();
-
         $messageStream = self::buildMessageStream($message);
-        $tweet->setMessage($messageStream);
+
+        $tweet = (new Tweet)->withMessage($messageStream);
 
         if (false === empty($mediaPath) && file_exists($mediaPath)) {
             $mediaStream = self::buildMediaStream($mediaPath);
-            $tweet->setMedia($mediaStream);
+            return $tweet->withMedia($mediaStream);
         }
 
         return $tweet;

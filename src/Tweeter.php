@@ -36,10 +36,7 @@ class Tweeter
     public function tweet(Tweet $tweet)
     {
         if ($tweet->getMedia() instanceof StreamInterface) {
-            $uploadResponse = $this->mediaUploader->upload($tweet);
-            if (200 !== $uploadResponse->getStatusCode()) {
-                return false;
-            }
+            $tweet = $this->mediaUploader->upload($tweet);
         }
 
         $updateResponse = $this->statusUpdater->update($tweet);

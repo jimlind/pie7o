@@ -19,19 +19,19 @@ class MediaUploader extends TwitterApiCaller
     protected $apiPath = '1.1/media/upload.json';
 
     /**
-     * 
+     *
      * @param Tweet $tweet
-     * @return Response
+     * @return Tweet
      */
     public function upload(Tweet $tweet)
     {
         $response = $this->sendTwitterRequest($tweet);
 
-        if (200 === $response->getStatusCode()) {
-            $this->handleResponse($response, $tweet);
+        if (200 !== $response->getStatusCode()) {
+            return $tweet;
         }
 
-        return $response;
+        return $this->handleResponse($response, $tweet);;
     }
 
     /**
@@ -55,12 +55,14 @@ class MediaUploader extends TwitterApiCaller
      *
      * @param Response $response
      * @param Tweet $tweet
+     *
+     * @return Tweet
      */
     protected function handleResponse(Response $response, Tweet $tweet)
     {
         $bodyString = $response->getBody();
         $bodyJson   = json_decode($bodyString);
 
-        $tweet->setMediaId($bodyJson->{'media_id'});
+        return $tweet->withMediaId($bodyJson->{'media_id'});
     }
 }
