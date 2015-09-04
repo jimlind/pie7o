@@ -1,4 +1,4 @@
-# Pie7o
+# PIE7O
 The PSR7 Tweeter
 
 #### Features
