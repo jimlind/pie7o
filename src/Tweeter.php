@@ -31,7 +31,6 @@ class Tweeter
     /**
      *
      * @param Tweet $tweet
-     * @return boolean
      */
     public function tweet(Tweet $tweet)
     {
@@ -39,8 +38,6 @@ class Tweeter
             $tweet = $this->mediaUploader->upload($tweet);
         }
 
-        $updateResponse = $this->statusUpdater->update($tweet);
-
-        return (200 === $updateResponse->getStatusCode());
+        $this->statusUpdater->update($tweet);
     }
 }

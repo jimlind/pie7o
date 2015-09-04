@@ -22,7 +22,11 @@ class StatusUpdater extends TwitterApiCaller
      */
     public function update(Tweet $tweet)
     {
-        return $this->sendTwitterRequest($tweet);;
+        $response = $this->sendTwitterRequest($tweet);
+
+        if (200 !== $response->getStatusCode()) {
+            throw new Exception('Could Not Update Status: `'.$response->getBody().'`');
+        }
     }
 
     protected function getOptions(Tweet $tweet) {

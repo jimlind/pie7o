@@ -16,7 +16,7 @@ class TweetFactory {
 
         $tweet = (new Tweet)->withMessage($messageStream);
 
-        if (false === empty($mediaPath) && file_exists($mediaPath)) {
+        if (null !== $mediaPath) {
             $mediaStream = self::buildMediaStream($mediaPath);
             return $tweet->withMedia($mediaStream);
         }
@@ -46,6 +46,10 @@ class TweetFactory {
      */
     protected function buildMediaStream($mediaPath)
     {
+        if (false === file_exists($mediaPath)) {
+            throw new Exception('File Does Not Exist: `'.$mediaPath.'`');
+        }
+
         $mediaHandle = fopen($mediaPath, 'r');
         $mediaStream = new Stream($mediaHandle);
         $mediaStream->rewind();

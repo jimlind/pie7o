@@ -28,7 +28,7 @@ class MediaUploader extends TwitterApiCaller
         $response = $this->sendTwitterRequest($tweet);
 
         if (200 !== $response->getStatusCode()) {
-            return $tweet;
+            throw new Exception('Could Not Upload Media: `'.$response->getBody().'`');
         }
 
         return $this->handleResponse($response, $tweet);;

@@ -28,19 +28,22 @@ $messageStream->rewind();
 $mediaHandle = fopen('./cat.jpg', 'r');
 $mediaStream = new GuzzleHttp\Psr7\Stream($mediaHandle);
 
-$funTweet (new JimLind\Pie7o\Tweet)
+$funTweet = (new JimLind\Pie7o\Tweet)
     ->withMessage($messageStream)
     ->withMedia($mediaStream);
 
 /**
  * Tweet and check results
  */
-$hardResult = $tweeter->tweet($funTweet);
+$tweeter->tweet($funTweet);
+/*
+ * TODO: Try Catch Around Tweet Action.
 if ($hardResult) {
     echo 'The first Tweet was successfull.'.PHP_EOL;
 } else {
     echo 'The first Tweet has failed.'.PHP_EOL;
 }
+ */
 
 /**
  * Create a Tweet object the cheating way
@@ -52,9 +55,12 @@ $cheatTweet = JimLind\Pie7o\TweetFactory::buildTweet($message, $media);
 /**
  * Tweet and check results
  */
-$cheatResult = $tweeter->tweet($cheatTweet);
+$tweeter->tweet($cheatTweet);
+/*
+ * TODO: Try Catch Around Tweet Action.
 if ($cheatResult) {
     echo 'The second Tweet was successfull.'.PHP_EOL;
 } else {
     echo 'The second Tweet has failed.'.PHP_EOL;
 }
+ */

@@ -41,7 +41,7 @@ class AuthorizationBuilder
         );
 
         if (false === $allSettingsAvailalable) {
-            throw new \Exception('Missing a setting for authorization.');
+            throw new Exception('Missing a setting for authorization.');
         }
 
         $this->accessToken       = $settingList['accessToken'];
