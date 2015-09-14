@@ -35,15 +35,13 @@ $funTweet = (new JimLind\Pie7o\Tweet)
 /**
  * Tweet and check results
  */
-$tweeter->tweet($funTweet);
-/*
- * TODO: Try Catch Around Tweet Action.
-if ($hardResult) {
-    echo 'The first Tweet was successfull.'.PHP_EOL;
-} else {
-    echo 'The first Tweet has failed.'.PHP_EOL;
+try {
+    $tweeter->tweet($funTweet);
+    echo 'The fun Tweet was successful.'.PHP_EOL;
+} catch (JimLind\Pie7o\Exception $exception) {
+    echo 'The fun Tweet has failed.'.PHP_EOL;
+    echo 'Exception thrown: `'.$exception->getMessage().'`'.PHP_EOL;
 }
- */
 
 /**
  * Create a Tweet object the cheating way
@@ -55,12 +53,10 @@ $cheatTweet = JimLind\Pie7o\TweetFactory::buildTweet($message, $media);
 /**
  * Tweet and check results
  */
-$tweeter->tweet($cheatTweet);
-/*
- * TODO: Try Catch Around Tweet Action.
-if ($cheatResult) {
-    echo 'The second Tweet was successfull.'.PHP_EOL;
-} else {
-    echo 'The second Tweet has failed.'.PHP_EOL;
+try {
+    $tweeter->tweet($cheatTweet);
+    echo 'The cheat Tweet was successful.'.PHP_EOL;
+} catch (JimLind\Pie7o\Exception $exception) {
+    echo 'The cheat Tweet has failed.'.PHP_EOL;
+    echo 'Exception thrown: `'.$exception->getMessage().'`'.PHP_EOL;
 }
- */
