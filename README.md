@@ -7,13 +7,16 @@ The PSR7 Tweeter
  * You can tweet with a picture
  * Nothing else
 
+#### Badges
+
+TODO
+
 #### Documentation
 
-I find that learning by example is the best way so here is an [example file](example.php) for you
-to poke at.
+I find that learning by example is the best way so I've made an [example](example.php) available.
 
-There isn't a lot of code, but it is readable. Additional documentation beyond the example code
-isn't required.
+The library will quietly succeed if there are no problems communicating with Twitter, but if there
+is a problem it throws a Pie7oException that extends the RuntimeException class.
 
 #### Why Does This Exist?
 
@@ -25,9 +28,9 @@ made my job a lot easier.
 
 #### Why Name it Pie7o?
 
-As a post only Twitter client this is basically a Tweeter. Some tweeter speakers utilize piezo
-technology. There are already a good number of applications and libraries called "Piezo." Replacing
-the Z with a 7 means you get a unique name and a reference to the PSR-7 usage.
+As a post only Twitter client this is basically a Tweeter. Some tweeter speakers are just a piezo.
+There are already a good number of applications and libraries called "Piezo." Replacing the Z with
+a 7 means you get a unique name and a reference to the PSR-7 usage.
 
 #### How do you pronounce it?
 
@@ -47,7 +50,7 @@ composer install
 vendor/bin/phpunit --coverage-text
 ```
 
-#### 100% Code Sniffed  (Eventually...)
+#### 100% Code Sniffed
 ```sh
 composer install
 bash sniff.sh

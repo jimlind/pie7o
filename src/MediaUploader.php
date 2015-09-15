@@ -19,25 +19,31 @@ class MediaUploader extends TwitterApiCaller
     protected $apiPath = '1.1/media/upload.json';
 
     /**
+     * Upload media via Twitter API and update Tweet
      *
      * @param Tweet $tweet
+     *
      * @return Tweet
+     *
+     * @throws Pie7oException
      */
     public function upload(Tweet $tweet)
     {
         $response = $this->sendTwitterRequest($tweet);
 
         if (200 !== $response->getStatusCode()) {
-            throw new Exception('Could Not Upload Media: `'.$response->getBody().'`');
+            throw new Pie7oException('Could Not Upload Media: `'.$response->getBody().'`');
         }
 
         return $this->handleResponse($response, $tweet);
     }
 
     /**
+     * Create options for a multipart binary file upload
      *
      * @param Tweet $tweet
-     * @return mixed[]
+     *
+     * @return array
      */
     protected function getOptions(Tweet $tweet)
     {
@@ -52,6 +58,7 @@ class MediaUploader extends TwitterApiCaller
     }
 
     /**
+     * Parse Guzzle response and add media data to return Tweet
      *
      * @param Response $response
      * @param Tweet $tweet

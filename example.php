@@ -56,7 +56,7 @@ $cheatTweet = JimLind\Pie7o\TweetFactory::buildTweet($message, $media);
 try {
     $tweeter->tweet($cheatTweet);
     echo 'The cheat Tweet was successful.'.PHP_EOL;
-} catch (JimLind\Pie7o\Exception $exception) {
+} catch (JimLind\Pie7o\Pie7oException $exception) {
     echo 'The cheat Tweet has failed.'.PHP_EOL;
     echo 'Exception thrown: `'.$exception->getMessage().'`'.PHP_EOL;
 }

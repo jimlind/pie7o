@@ -1,5 +1,4 @@
 <?php
-
 namespace JimLind\Pie7o;
 
 use GuzzleHttp\Psr7\Stream;
@@ -9,10 +8,11 @@ use GuzzleHttp\Psr7\Stream;
  */
 class TweetFactory
 {
-
     /**
+     * Build a Tweet
+     *
      * @param string $message
-     * @param string $mediaPath
+     * @param string $mediaPath Optional
      *
      * @return Tweet
      */
@@ -33,6 +33,7 @@ class TweetFactory
     }
 
     /**
+     * Build a message stream from a string
      *
      * @param string $message
      *
@@ -49,15 +50,18 @@ class TweetFactory
     }
 
     /**
+     * Build a media stream from a filepath
      *
      * @param string $mediaPath
      *
      * @return Stream
+     *
+     * @throws Pie7oException
      */
     protected function buildMediaStream($mediaPath)
     {
         if (false === file_exists($mediaPath)) {
-            throw new Exception('File Does Not Exist: `'.$mediaPath.'`');
+            throw new Pie7oException('File Does Not Exist: `'.$mediaPath.'`');
         }
 
         $mediaHandle = fopen($mediaPath, 'r');

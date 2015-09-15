@@ -1,5 +1,4 @@
 <?php
-
 namespace JimLind\Pie7o;
 
 use Psr\Http\Message\StreamInterface;
@@ -25,6 +24,8 @@ class Tweet
     protected $mediaId = 0;
 
     /**
+     * Return a Tweet with added message stream
+     *
      * @param StreamInterface $messageStream
      *
      * @return Tweet
@@ -38,6 +39,8 @@ class Tweet
     }
 
     /**
+     * Get the message stream
+     *
      * @return StreamInterface
      */
     public function getMessage()
@@ -46,6 +49,8 @@ class Tweet
     }
 
     /**
+     * Return a Tweet with added media stream
+     *
      * @param StreamInterface $mediaStream
      *
      * @return Tweet
@@ -59,6 +64,8 @@ class Tweet
     }
 
     /**
+     * Get the media stream
+     *
      * @return StreamInterface
      */
     public function getMedia()
@@ -67,6 +74,8 @@ class Tweet
     }
 
     /**
+     * Return a Tweet with added media id
+     *
      * @param int $mediaId
      *
      * @return Tweet
@@ -80,6 +89,8 @@ class Tweet
     }
 
     /**
+     * Get the media id
+     *
      * @return int
      */
     public function getMediaId()

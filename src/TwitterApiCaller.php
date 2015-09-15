@@ -1,7 +1,7 @@
 <?php
-
 namespace JimLind\Pie7o;
 
+use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\BadResponseException;
 use GuzzleHttp\Psr7\Request;
@@ -13,7 +13,6 @@ use GuzzleHttp\Psr7\Uri;
  */
 class TwitterApiCaller
 {
-
     /**
      * @var string
      */
@@ -48,11 +47,13 @@ class TwitterApiCaller
     }
 
     /**
+     * Send the API request and ensure a Guzzle Response is returned
      *
      * @param Tweet $tweet
+     *
      * @return Response
      */
-    protected function sendTwitterRequest($tweet)
+    protected function sendTwitterRequest(Tweet $tweet)
     {
         $client = new Client();
 
@@ -64,7 +65,7 @@ class TwitterApiCaller
             $response = $client->send($request, $options);
         } catch (BadResponseException $requestException) {
             $response = $requestException->getResponse();
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $response = new Response(0, [], $exception->getMessage());
         }
 
@@ -72,9 +73,9 @@ class TwitterApiCaller
     }
 
     /**
+     * Default empty array can be overwritten
      *
-     * @param Tweet $tweet
-     * @return mixed[]
+     * @return array
      */
     protected function getPostData()
     {
@@ -82,9 +83,9 @@ class TwitterApiCaller
     }
 
     /**
+     * Default empty array can be overwritten
      *
-     * @param Tweet $tweet
-     * @return mixed[]
+     * @return array
      */
     protected function getOptions()
     {
@@ -92,9 +93,11 @@ class TwitterApiCaller
     }
 
     /**
+     * Build a Guzzle Request with an authorization header
      *
      * @param array $postData
-     * @return type
+     *
+     * @return Request
      */
     protected function buildRequest(array $postData)
     {
@@ -107,6 +110,7 @@ class TwitterApiCaller
     }
 
     /**
+     * Build a URI for the Twitter API
      *
      * @return Uri
      */

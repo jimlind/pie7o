@@ -4,7 +4,7 @@ namespace JimLind\Pie7o;
 use Psr\Http\Message\StreamInterface;
 
 /**
- * Uploads images and updates statuses as required.
+ * Uploads images and updates statuses as required
  */
 class Tweeter
 {
@@ -29,6 +29,7 @@ class Tweeter
     }
 
     /**
+     * Tweet by optionally uploading media and updating status
      *
      * @param Tweet $tweet
      */

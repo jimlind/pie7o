@@ -1,9 +1,8 @@
 <?php
-
 namespace JimLind\Pie7o;
 
 /**
- * Builds an Oauth 1 string for the Twitter API
+ * Build an Oauth 1 string for the Twitter API
  */
 class AuthorizationBuilder
 {
@@ -29,7 +28,8 @@ class AuthorizationBuilder
 
     /**
      * @param array $settingList
-     * @throws Exception
+     *
+     * @throws Pie7oException
      */
     public function __construct(array $settingList)
     {
@@ -41,7 +41,7 @@ class AuthorizationBuilder
         );
 
         if (false === $allSettingsAvailalable) {
-            throw new Exception('Missing a setting for authorization.');
+            throw new Pie7oException('Missing a setting for authorization.');
         }
 
         $this->accessToken       = $settingList['accessToken'];
@@ -51,9 +51,12 @@ class AuthorizationBuilder
     }
 
     /**
+     * Create a complete OAuth authorization string
+     *
      * @param string $method
      * @param string $uri
      * @param array  $postData
+     *
      * @return string
      */
     public function build($method, $uri, array $postData)
@@ -69,6 +72,15 @@ class AuthorizationBuilder
         return 'OAuth '.implode($authStringList, ', ');
     }
 
+    /**
+     * Create a list of values needed for authentication
+     *
+     * @param string $method
+     * @param string $uri
+     * @param array $postData
+     *
+     * @return array
+     */
     protected function buildValueList($method, $uri, array $postData)
     {
         $queryData = [
@@ -88,7 +100,17 @@ class AuthorizationBuilder
         return $queryData;
     }
 
-    protected function buildMessage($queryData, $method, $uri, array $postData)
+    /**
+     * Create an escaped string with the message getting encoded
+     *
+     * @param array $queryData
+     * @param string $method
+     * @param string $uri
+     * @param array $postData
+     *
+     * @return string
+     */
+    protected function buildMessage(array $queryData, $method, $uri, array $postData)
     {
         $queryData += $postData;
         ksort($queryData);
@@ -100,6 +122,11 @@ class AuthorizationBuilder
         return implode('&', $encodedList);
     }
 
+    /**
+     * Create an escaped string with the keys used for encoding
+     *
+     * @return string
+     */
     protected function buildKey()
     {
         $valueList     = [$this->consumerSecret, $this->accessTokenSecret];
