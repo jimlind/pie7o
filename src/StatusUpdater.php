@@ -29,8 +29,10 @@ class StatusUpdater extends TwitterApiCaller
         }
     }
 
-    protected function getOptions(Tweet $tweet) {
+    protected function getOptions(Tweet $tweet)
+    {
         $postData = $this->getPostData($tweet);
+
         return ['form_params' => $postData];
     }
 

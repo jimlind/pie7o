@@ -4,20 +4,28 @@ namespace JimLind\Pie7o;
 
 use GuzzleHttp\Psr7\Stream;
 
-class TweetFactory {
+/**
+ * Factory for building tweet objects
+ */
+class TweetFactory
+{
 
     /**
      * @param string $message
      * @param string $mediaPath
+     *
+     * @return Tweet
      */
     public static function buildTweet($message = '', $mediaPath = null)
     {
         $messageStream = self::buildMessageStream($message);
 
-        $tweet = (new Tweet)->withMessage($messageStream);
+        $tweet = (new Tweet())
+            ->withMessage($messageStream);
 
         if (null !== $mediaPath) {
             $mediaStream = self::buildMediaStream($mediaPath);
+
             return $tweet->withMedia($mediaStream);
         }
 
@@ -27,6 +35,7 @@ class TweetFactory {
     /**
      *
      * @param string $message
+     *
      * @return Stream
      */
     protected function buildMessageStream($message)
@@ -42,6 +51,7 @@ class TweetFactory {
     /**
      *
      * @param string $mediaPath
+     *
      * @return Stream
      */
     protected function buildMediaStream($mediaPath)

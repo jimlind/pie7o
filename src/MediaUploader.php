@@ -31,7 +31,7 @@ class MediaUploader extends TwitterApiCaller
             throw new Exception('Could Not Upload Media: `'.$response->getBody().'`');
         }
 
-        return $this->handleResponse($response, $tweet);;
+        return $this->handleResponse($response, $tweet);
     }
 
     /**

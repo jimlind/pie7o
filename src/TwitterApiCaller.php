@@ -11,7 +11,8 @@ use GuzzleHttp\Psr7\Uri;
 /**
  * Communicate with the Twitter API
  */
-class TwitterApiCaller {
+class TwitterApiCaller
+{
 
     /**
      * @var string
@@ -101,6 +102,7 @@ class TwitterApiCaller {
 
         $authorization   = $this->authorizationBuilder->build($this->apiMethod, (string) $uri, $postData);
         $originalRequest = new Request($this->apiMethod, $uri);
+
         return $originalRequest->withHeader('Authorization', $authorization);
     }
 
@@ -110,7 +112,7 @@ class TwitterApiCaller {
      */
     protected function buildURI()
     {
-        return (new Uri)
+        return (new Uri())
             ->withScheme($this->apiScheme)
             ->withHost($this->apiHost)
             ->withPath($this->apiPath);
