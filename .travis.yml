@@ -1,0 +1,14 @@
+udo: false
+language: php
+php:
+- hhvm
+- 7
+- 5.6
+- 5.5
+before_script:
+- composer install
+script: 
+- phpunit --coverage-clover build/logs/clover.xml
+after_script:
+- php vendor/bin/coveralls -v
+
