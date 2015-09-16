@@ -39,7 +39,7 @@ class TweetFactory
      *
      * @return Stream
      */
-    protected function buildMessageStream($message)
+    protected static function buildMessageStream($message)
     {
         $messageHandle = fopen('php://temp', 'r+');
         $messageStream = new Stream($messageHandle);
@@ -58,7 +58,7 @@ class TweetFactory
      *
      * @throws Pie7oException
      */
-    protected function buildMediaStream($mediaPath)
+    protected static function buildMediaStream($mediaPath)
     {
         if (false === file_exists($mediaPath)) {
             throw new Pie7oException('File Does Not Exist: `'.$mediaPath.'`');
