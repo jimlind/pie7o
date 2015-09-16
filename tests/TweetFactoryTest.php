@@ -5,8 +5,14 @@ namespace JimLind\Pie7o\Tests;
 use JimLind\Pie7o\TweetFactory;
 use phpmock\spy\Spy;
 
+/**
+ * Test the JimLind\Pie7o\TweetFactory class
+ */
 class TweetFactoryTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * Test contents after building an empty Tweet
+     */
     public function testEmptyBuildTweet()
     {
         $tweet = TweetFactory::buildTweet();
@@ -18,9 +24,12 @@ class TweetFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($mediaStream);
     }
 
+    /**
+     * Test contents after building a Tweet with just a message
+     */
     public function testBuildTweetWithMessage()
     {
-        $message = (string) rand();
+        $message = uniqid();
         $tweet   = TweetFactory::buildTweet($message);
 
         $messageStream = $tweet->getMessage();
@@ -30,29 +39,43 @@ class TweetFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($mediaStream);
     }
 
-    public function testBuildTweetWithoutFile()
+    /**
+     * Test building with a file that doesn't exist throws exception
+     *
+     * @return null
+     */
+    public function testBuildTweetWithBadFile()
     {
-        $filePath = (string) rand();
+        $filePath = uniqid();
+        $this->setExpectedException(
+            'JimLind\Pie7o\Pie7oException',
+            'File Does Not Exist: `'.$filePath.'`'
+        );
 
-        $fileExistsSpy = new Spy('JimLind\Pie7o', 'file_exists', function(){return false;});
+        $returnFalse = function () {
+            return false;
+        };
+
+        $fileExistsSpy = new Spy('JimLind\Pie7o', 'file_exists', $returnFalse);
         $fileExistsSpy->enable();
 
-        $tweet = TweetFactory::buildTweet('', $filePath);
-        $mediaStream = $tweet->getMedia();
-        $this->assertNull($mediaStream);
-
-        $existsInvocationList = $fileExistsSpy->getInvocations();
-        $existsArgumentList   = $existsInvocationList[0]->getArguments();
-        $this->assertEquals($filePath, $existsArgumentList[0]);
-
-        $fileExistsSpy->disable();
+        TweetFactory::buildTweet('', $filePath);
     }
 
-    public function testBuildTweetWithFile()
+    /**
+     * Test building with a file that does exist
+     *
+     * @return null
+     */
+    public function testBuildTweetWithGoodFile()
     {
-        $filePath = (string) rand();
+        $returnTrue = function () {
+            return true;
+        };
 
-        $fileExistsSpy = new Spy('JimLind\Pie7o', 'file_exists', function(){return true;});
+        $filePath = uniqid();
+
+        $fileExistsSpy = new Spy('JimLind\Pie7o', 'file_exists', $returnTrue);
         $fileExistsSpy->enable();
 
         $fileOpenSpy = new Spy('JimLind\Pie7o', 'fopen', [$this, 'returnFileHandle']);
@@ -69,11 +92,14 @@ class TweetFactoryTest extends \PHPUnit_Framework_TestCase
         $openInvocationList = $fileOpenSpy->getInvocations();
         $openArgumentList   = $openInvocationList[0]->getArguments();
         $this->assertEquals($filePath, $openArgumentList[0]);
-
-        $fileExistsSpy->disable();
-        $fileOpenSpy->disable();
     }
 
+    /**
+     * Create a resource from input with strings prepended and appended
+     *
+     * @param string $input
+     * @return resource
+     */
     public function returnFileHandle($input)
     {
         $handler =  fopen('php://temp', 'r+');
@@ -81,5 +107,17 @@ class TweetFactoryTest extends \PHPUnit_Framework_TestCase
         rewind($handler);
 
         return $handler;
+    }
+
+    /**
+     * Disable built-in mocks
+     */
+    protected function tearDown()
+    {
+        $fileExistsSpy = new Spy('JimLind\Pie7o', 'file_exists');
+        $fileExistsSpy->disable();
+
+        $fileOpenSpy = new Spy('JimLind\Pie7o', 'fopen');
+        $fileOpenSpy->disable();
     }
 }

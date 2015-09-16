@@ -4,6 +4,7 @@ namespace JimLind\Pie7o\Tests;
 
 use JimLind\Pie7o\AuthorizationBuilder;
 use phpmock\Mock;
+use phpmock\spy\Spy;
 
 /**
  * Test the JimLind\Pie7o\AuthorizationBuilder class
@@ -33,10 +34,10 @@ class AuthorizationBuilderTest extends \PHPUnit_Framework_TestCase
     public function authorizationBuilderConstructExceptionProvider()
     {
         $empty  = [];
-        $aToken  = ['accessToken' => rand()];
-        $aSecret = ['accessTokenSecret' => rand()];
-        $cKey    = ['consumerKey' => rand()];
-        $cSecret = ['consumerSecret' => rand()];
+        $aToken  = ['accessToken' => uniqid()];
+        $aSecret = ['accessTokenSecret' => uniqid()];
+        $cKey    = ['consumerKey' => uniqid()];
+        $cSecret = ['consumerSecret' => uniqid()];
 
         return [
             [$empty],
@@ -82,7 +83,6 @@ class AuthorizationBuilderTest extends \PHPUnit_Framework_TestCase
         $actual = $builder->build($method, $uri, $post);
 
         $this->assertEquals($expected, $actual);
-        $mockTime->disable();
     }
 
     /**
@@ -118,5 +118,17 @@ class AuthorizationBuilderTest extends \PHPUnit_Framework_TestCase
         ];
 
         return 'OAuth '.implode(', ', $dataCollection);
+    }
+
+    /**
+     * Disable built-in mocks
+     *
+     * Use spy class here because it doesn't require a callable
+     */
+    protected function tearDown()
+    {
+
+        $mockTime = new Spy('JimLind\Pie7o', 'time');
+        $mockTime->disable();
     }
 }
