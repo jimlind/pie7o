@@ -5,19 +5,31 @@ namespace JimLind\Pie7o\Tests;
 use JimLind\Pie7o\AuthorizationBuilder;
 use phpmock\Mock;
 
+/**
+ * Test the JimLind\Pie7o\AuthorizationBuilder class
+ */
 class AuthorizationBuilderTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @expectedException        Exception
+     * Test a variety of input data that is insufficiant
+     *
+     * @expectedException        JimLind\Pie7o\Pie7oException
      * @expectedExceptionMessage Missing a setting for authorization.
      *
      * @dataProvider authorizationBuilderConstructExceptionProvider
+     *
+     * @param array $settingList
      */
-    public function testAuthorizationBuilderConstructException($settingList)
+    public function testAuthorizationBuilderConstructException(array $settingList)
     {
         new AuthorizationBuilder($settingList);
     }
 
+    /**
+     * Data provider of insufficiant AuthorizationBuilder input
+     *
+     * @return array
+     */
     public function authorizationBuilderConstructExceptionProvider()
     {
         $empty  = [];
@@ -36,11 +48,23 @@ class AuthorizationBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test that the output of the AuthorizationBuilder is what we expect
+     *
      * @dataProvider authorizationBuilderProvider
+     *
+     * @param int    $time
+     * @param string $expected
+     *
+     * @return null
      */
     public function testAuthorizationBuilder($time, $expected)
     {
-        $mockTime = new Mock('JimLind\Pie7o', 'time', function() use ($time) {return $time;});
+        $getTime = function () use ($time) {
+            return $time;
+        };
+
+        // Sniffer doesn't like the use function shorthand. Boo.
+        $mockTime = new Mock('JimLind\Pie7o', 'time', $getTime);
         $mockTime->enable();
 
         $settingList = [
@@ -61,6 +85,11 @@ class AuthorizationBuilderTest extends \PHPUnit_Framework_TestCase
         $mockTime->disable();
     }
 
+    /**
+     * Data provider of AuthorizationBuilder output test
+     *
+     * @return array
+     */
     public function authorizationBuilderProvider()
     {
         return [
@@ -69,6 +98,13 @@ class AuthorizationBuilderTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
+    /**
+     * Fill static pieces of authorization string with some input
+     *
+     * @param int    $time
+     * @param string $signature
+     * @return string
+     */
     protected function createMockResponse($time, $signature)
     {
         $dataCollection = [
