@@ -41,7 +41,7 @@ class TweetFactory
      */
     protected static function buildMessageStream($message)
     {
-        $messageHandle = fopen('php://temp', 'r+');
+        $messageHandle = fopen('php://memory', 'r+');
         $messageStream = new Stream($messageHandle);
         $messageStream->write($message);
         $messageStream->rewind();
