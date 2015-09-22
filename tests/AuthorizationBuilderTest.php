@@ -3,14 +3,15 @@
 namespace JimLind\Pie7o\Tests;
 
 use JimLind\Pie7o\AuthorizationBuilder;
-use phpmock\Mock;
-use phpmock\spy\Spy;
+use phpmock\phpunit\PHPMock;
 
 /**
  * Test the JimLind\Pie7o\AuthorizationBuilder class
  */
 class AuthorizationBuilderTest extends \PHPUnit_Framework_TestCase
 {
+    use PHPMock;
+
     /**
      * Test a variety of input data that is insufficiant
      *
@@ -55,18 +56,11 @@ class AuthorizationBuilderTest extends \PHPUnit_Framework_TestCase
      *
      * @param int    $time
      * @param string $expected
-     *
-     * @return null
      */
     public function testAuthorizationBuilder($time, $expected)
     {
-        $getTime = function () use ($time) {
-            return $time;
-        };
-
-        // Sniffer doesn't like the use function shorthand. Boo.
-        $mockTime = new Mock('JimLind\Pie7o', 'time', $getTime);
-        $mockTime->enable();
+        $mockTime = $this->getFunctionMock('JimLind\Pie7o', 'time');
+        $mockTime->expects($this->any())->willReturn($time);
 
         $settingList = [
             'accessToken'       => 'YOUR ACCESS TOKEN',
@@ -118,17 +112,5 @@ class AuthorizationBuilderTest extends \PHPUnit_Framework_TestCase
         ];
 
         return 'OAuth '.implode(', ', $dataCollection);
-    }
-
-    /**
-     * Disable built-in mocks
-     *
-     * Use spy class here because it doesn't require a callable
-     */
-    protected function tearDown()
-    {
-
-        $mockTime = new Spy('JimLind\Pie7o', 'time');
-        $mockTime->disable();
     }
 }
