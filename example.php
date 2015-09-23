@@ -20,9 +20,10 @@ $settingList = [
 ];
 
 $authorizationBuilder = new AuthorizationBuilder($settingList);
+$guzzleClient         = new Client();
 
-$statusUpdater = new StatusUpdater($authorizationBuilder);
-$mediaUploader = new MediaUploader($authorizationBuilder);
+$statusUpdater = new StatusUpdater($authorizationBuilder, $guzzleClient);
+$mediaUploader = new MediaUploader($authorizationBuilder, $guzzleClient);
 $tweeter       = new Tweeter($statusUpdater, $mediaUploader);
 
 /**

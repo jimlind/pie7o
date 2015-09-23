@@ -36,14 +36,21 @@ class TwitterApiCaller
     /**
      * @var AuthorizationBuilder
      */
-    protected $authorizationBuilder = null;
+    protected $authorizationBuilder;
+
+    /**
+     * @var Client
+     */
+    protected $guzzleClient;
 
     /**
      * @param AuthorizationBuilder $authorizationBuilder
+     * @param Client               $guzzleClient
      */
-    public function __construct(AuthorizationBuilder $authorizationBuilder)
+    public function __construct(AuthorizationBuilder $authorizationBuilder, Client $guzzleClient)
     {
         $this->authorizationBuilder = $authorizationBuilder;
+        $this->guzzleClient         = $guzzleClient;
     }
 
     /**
@@ -55,14 +62,12 @@ class TwitterApiCaller
      */
     protected function sendTwitterRequest(Tweet $tweet)
     {
-        $client = new Client();
-
         $postData = $this->getPostData($tweet);
         $request  = $this->buildRequest($postData);
         $options  = $this->getOptions($tweet);
 
         try {
-            $response = $client->send($request, $options);
+            $response = $this->guzzleClient->send($request, $options);
         } catch (BadResponseException $requestException) {
             $response = $requestException->getResponse();
         } catch (Exception $exception) {
