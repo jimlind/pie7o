@@ -13,6 +13,9 @@ The PSR7 Tweeter
 
 #### Documentation
 
+Configuration seems a little more difficult than it should be, but it keeps things flexible. You'll
+only ever have to configure it once. Building a service provider would make thigns even easier.
+
 I find that learning by example is the best way so I've made an [example](example.php) available.
 
 The library will quietly succeed if there are no problems communicating with Twitter, but if there
