@@ -2,7 +2,7 @@
 namespace JimLind\Pie7o;
 
 use Exception;
-use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\BadResponseException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
@@ -39,15 +39,15 @@ class TwitterApiCaller
     protected $authorizationBuilder;
 
     /**
-     * @var Client
+     * @var ClientInterface
      */
     protected $guzzleClient;
 
     /**
      * @param AuthorizationBuilder $authorizationBuilder
-     * @param Client               $guzzleClient
+     * @param ClientInterface      $guzzleClient
      */
-    public function __construct(AuthorizationBuilder $authorizationBuilder, Client $guzzleClient)
+    public function __construct(AuthorizationBuilder $authorizationBuilder, ClientInterface $guzzleClient)
     {
         $this->authorizationBuilder = $authorizationBuilder;
         $this->guzzleClient         = $guzzleClient;
