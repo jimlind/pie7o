@@ -90,9 +90,11 @@ class TwitterApiCaller
     /**
      * Default empty array can be overwritten
      *
+     * @param Tweet $tweet
+     *
      * @return array
      */
-    protected function getOptions()
+    protected function getOptions(Tweet $tweet)
     {
         return [];
     }
