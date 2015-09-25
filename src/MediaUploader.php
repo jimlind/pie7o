@@ -16,7 +16,7 @@ class MediaUploader extends TwitterApiCaller
     /**
      * @var string
      */
-    protected $apiPath = '1.1/media/upload.json';
+    protected $apiPath = '/1.1/media/upload.json';
 
     /**
      * Upload media via Twitter API and update Tweet
