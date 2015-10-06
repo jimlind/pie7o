@@ -14,7 +14,7 @@ class StatusUpdater extends TwitterApiCaller
     /**
      * @var string
      */
-    protected $apiPath = '1.1/statuses/update.json';
+    protected $apiPath = '/1.1/statuses/update.json';
 
     /**
      * Attempt to update status and throw error if unsuccessful
