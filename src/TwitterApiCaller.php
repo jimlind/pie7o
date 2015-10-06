@@ -82,7 +82,7 @@ class TwitterApiCaller
      *
      * @return array
      */
-    protected function getPostData()
+    protected function getPostData(Tweet $tweet)
     {
         return [];
     }
