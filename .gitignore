@@ -1,3 +1,4 @@
 composer.lock
 local.example.php
+local.example.di.php
 /vendor/
