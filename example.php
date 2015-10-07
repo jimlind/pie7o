@@ -2,8 +2,8 @@
 require 'vendor/autoload.php';
 
 use JimLind\Pie7o\Pie7oException;
-use JimLind\Pie7o\TweetFactory;
-use JimLind\Pie7o\TweeterFactory;
+use JimLind\Pie7o\Factory\TweetFactory;
+use JimLind\Pie7o\Factory\TweeterFactory;
 
 /**
  * Configure all the things

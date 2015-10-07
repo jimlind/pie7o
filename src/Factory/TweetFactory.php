@@ -1,7 +1,10 @@
 <?php
-namespace JimLind\Pie7o;
+namespace JimLind\Pie7o\Factory;
 
 use GuzzleHttp\Psr7\Stream;
+use JimLind\Pie7o\AuthorizationBuilder;
+use JimLind\Pie7o\Pie7oException;
+use JimLind\Pie7o\Tweet;
 
 /**
  * Factory for building tweet objects

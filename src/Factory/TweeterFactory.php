@@ -1,7 +1,11 @@
 <?php
-namespace JimLind\Pie7o;
+namespace JimLind\Pie7o\Factory;
 
 use GuzzleHttp\Client;
+use JimLind\Pie7o\AuthorizationBuilder;
+use JimLind\Pie7o\MediaUploader;
+use JimLind\Pie7o\StatusUpdater;
+use JimLind\Pie7o\Tweeter;
 
 /**
  * Factory for building a Tweeter

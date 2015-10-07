@@ -1,12 +1,12 @@
 <?php
 
-namespace JimLind\Pie7o\Tests;
+namespace JimLind\Pie7o\Factory\Tests;
 
-use JimLind\Pie7o\TweetFactory;
+use JimLind\Pie7o\Factory\TweetFactory;
 use org\bovigo\vfs\vfsStream;
 
 /**
- * Test the JimLind\Pie7o\TweetFactory class
+ * Test the JimLind\Pie7o\Factory\TweetFactory class
  */
 class TweetFactoryTest extends \PHPUnit_Framework_TestCase
 {
