@@ -33,14 +33,14 @@ class AuthorizationBuilder
      */
     public function __construct(array $settingList)
     {
-        $allSettingsAvailalable = isset(
+        $settingsIntact = isset(
             $settingList['accessToken'],
             $settingList['accessTokenSecret'],
             $settingList['consumerKey'],
             $settingList['consumerSecret']
         );
 
-        if (false === $allSettingsAvailalable) {
+        if (false === $settingsIntact) {
             throw new Pie7oException('Missing a setting for authorization.');
         }
 
