@@ -10,6 +10,7 @@ The PSR7 Tweeter
 #### Badges
 
 [![Build Status](https://travis-ci.org/jimlind/pie7o.png?branch=master)](https://travis-ci.org/jimlind/pie7o)
+[![Code Climate](https://codeclimate.com/github/jimlind/pie7o/badges/gpa.svg)](https://codeclimate.com/github/jimlind/pie7o)
 
 #### Documentation
 
