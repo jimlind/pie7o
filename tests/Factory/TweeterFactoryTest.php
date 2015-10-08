@@ -18,7 +18,7 @@ class TweeterFactoryTest extends \PHPUnit_Framework_TestCase
             'accessToken' => uniqid(),
             'accessTokenSecret' => uniqid(),
             'consumerKey' => uniqid(),
-            'consumerSecret' => uniqid()
+            'consumerSecret' => uniqid(),
         ];
 
         $fixture = TweeterFactory::buildTweeter($settings);
