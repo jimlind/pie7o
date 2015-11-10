@@ -14,10 +14,13 @@ The PSR7 Tweeter
 
 #### Documentation
 
-Configuration seems a little more difficult than it should be, but it keeps things flexible. You'll
-only ever have to configure it once. Building a service provider would make thigns even easier.
+Configuration may seem a little more difficult than it needs to be, but it keeps things flexible.
+You'll only ever have to configure it once. I find that learning by example is the best way so here
+are some examples:
 
-I find that learning by example is the best way so I've made an [example](example.php) available.
+ - [The easy way](example.php)
+ - [The dependency injection way](example.di.php)
+ - [The silex service provider way](example.silex.php)
 
 The library will quietly succeed if there are no problems communicating with Twitter, but if there
 is a problem it throws a Pie7oException that extends the RuntimeException class.

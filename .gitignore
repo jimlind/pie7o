@@ -1,4 +1,5 @@
 composer.lock
 local.example.php
 local.example.di.php
+local.example.silex.php
 /vendor/
