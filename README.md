@@ -48,7 +48,7 @@ doing that. It's not hard to send the binaries, you just have to read the Twitte
 
 ## Code Quality Metrics
 
-#### 100% Code Coverage (Eventually...)
+#### 100% Code Coverage*
 ```sh
 composer install
 vendor/bin/phpunit --coverage-text
@@ -59,3 +59,5 @@ vendor/bin/phpunit --coverage-text
 composer install
 bash sniff.sh
 ```
+
+*Except the optional Silex Service Provider
