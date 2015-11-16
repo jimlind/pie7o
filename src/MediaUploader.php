@@ -1,10 +1,11 @@
 <?php
+
 namespace JimLind\Pie7o;
 
 use GuzzleHttp\Psr7\Response;
 
 /**
- * Upload media with the Twitter API
+ * Upload media with the Twitter API.
  */
 class MediaUploader extends TwitterApiCaller
 {
@@ -19,7 +20,7 @@ class MediaUploader extends TwitterApiCaller
     protected $apiPath = '/1.1/media/upload.json';
 
     /**
-     * Upload media via Twitter API and update Tweet
+     * Upload media via Twitter API and update Tweet.
      *
      * @param Tweet $tweet
      *
@@ -39,7 +40,7 @@ class MediaUploader extends TwitterApiCaller
     }
 
     /**
-     * Create options for a multipart binary file upload
+     * Create options for a multipart binary file upload.
      *
      * @param Tweet $tweet
      *
@@ -58,17 +59,17 @@ class MediaUploader extends TwitterApiCaller
     }
 
     /**
-     * Parse Guzzle response and add media data to return Tweet
+     * Parse Guzzle response and add media data to return Tweet.
      *
      * @param Response $response
-     * @param Tweet $tweet
+     * @param Tweet    $tweet
      *
      * @return Tweet
      */
     protected function handleResponse(Response $response, Tweet $tweet)
     {
         $bodyString = $response->getBody();
-        $bodyJson   = json_decode($bodyString);
+        $bodyJson = json_decode($bodyString);
 
         return $tweet->withMediaId($bodyJson->{'media_id'});
     }

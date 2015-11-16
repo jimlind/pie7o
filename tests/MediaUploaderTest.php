@@ -1,6 +1,6 @@
 <?php
 
-namespace JimLind\Pie7o\Tests;
+namespace JimLind\Pie7o\tests;
 
 use Exception;
 use GuzzleHttp\Exception\BadResponseException;
@@ -9,7 +9,7 @@ use JimLind\Pie7o\MediaUploader;
 use PHPUnit_Framework_TestCase;
 
 /**
- * Test the JimLind\Pie7o\MediaUploader class
+ * Test the JimLind\Pie7o\MediaUploader class.
  */
 class MediaUploaderTest extends PHPUnit_Framework_TestCase
 {
@@ -35,7 +35,7 @@ class MediaUploaderTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test fixture has proper inheritance
+     * Test fixture has proper inheritance.
      */
     public function testInheritance()
     {
@@ -43,7 +43,7 @@ class MediaUploaderTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test AuthorizationBuilder is called correctly
+     * Test AuthorizationBuilder is called correctly.
      *
      * Short circuit the output with an exception
      *
@@ -53,21 +53,21 @@ class MediaUploaderTest extends PHPUnit_Framework_TestCase
     public function testAuthorizationBuilderCalled()
     {
         $method = 'POST';
-        $url    = 'https://upload.twitter.com/1.1/media/upload.json';
-        $post   = [];
+        $url = 'https://upload.twitter.com/1.1/media/upload.json';
+        $post = [];
 
         $this->authorizationBuilder->expects($this->once())->method('build')->with($method, $url, $post);
         $this->guzzleClient->method('send')->will($this->throwException(new Exception()));
 
         $stream = $this->getMock('Psr\Http\Message\StreamInterface');
-        $tweet  = $this->getMock('JimLind\Pie7o\Tweet');
+        $tweet = $this->getMock('JimLind\Pie7o\Tweet');
         $tweet->method('getMedia')->willReturn($stream);
 
         $this->fixture->upload($tweet);
     }
 
     /**
-     * Test GuzzleClient is called correctly
+     * Test GuzzleClient is called correctly.
      *
      * Short circuit the output with an exception
      *
@@ -76,7 +76,7 @@ class MediaUploaderTest extends PHPUnit_Framework_TestCase
      */
     public function testGuzzleClientSendCalledWithRequestAndOptions()
     {
-        $auth     = uniqid();
+        $auth = uniqid();
         $contents = uniqid();
 
         $this->authorizationBuilder->method('build')->willReturn($auth);
@@ -84,7 +84,7 @@ class MediaUploaderTest extends PHPUnit_Framework_TestCase
         $stream = $this->getMock('Psr\Http\Message\StreamInterface');
         $stream->method('getContents')->willReturn($contents);
 
-        $tweet  = $this->getMock('JimLind\Pie7o\Tweet');
+        $tweet = $this->getMock('JimLind\Pie7o\Tweet');
         $tweet->method('getMedia')->willReturn($stream);
 
         $request = (new Request('POST', 'https://upload.twitter.com/1.1/media/upload.json'))
@@ -98,14 +98,14 @@ class MediaUploaderTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test GuzzleClient throws a BadResponseException
+     * Test GuzzleClient throws a BadResponseException.
      *
      * @expectedException JimLind\Pie7o\Pie7oException
      * @expectedExceptionMessage Could Not Upload Media: `Bad Response Exception Body`
      */
     public function testGuzzleClientBadResponseException()
     {
-        $request   = $this->getMock('Psr\Http\Message\RequestInterface');
+        $request = $this->getMock('Psr\Http\Message\RequestInterface');
         $response = $this->getMock('GuzzleHttp\Psr7\Response');
         $response->method('getBody')->willReturn('Bad Response Exception Body');
 
@@ -114,14 +114,14 @@ class MediaUploaderTest extends PHPUnit_Framework_TestCase
         $this->guzzleClient->method('send')->will($this->throwException($exception));
 
         $stream = $this->getMock('Psr\Http\Message\StreamInterface');
-        $tweet  = $this->getMock('JimLind\Pie7o\Tweet');
+        $tweet = $this->getMock('JimLind\Pie7o\Tweet');
         $tweet->method('getMedia')->willReturn($stream);
 
         $this->fixture->upload($tweet);
     }
 
     /**
-     * Test GuzzleClient throws an Exception
+     * Test GuzzleClient throws an Exception.
      *
      * @expectedException JimLind\Pie7o\Pie7oException
      * @expectedExceptionMessage Could Not Upload Media: `Standard Exception Message`
@@ -132,14 +132,14 @@ class MediaUploaderTest extends PHPUnit_Framework_TestCase
         $this->guzzleClient->method('send')->will($this->throwException($exception));
 
         $stream = $this->getMock('Psr\Http\Message\StreamInterface');
-        $tweet  = $this->getMock('JimLind\Pie7o\Tweet');
+        $tweet = $this->getMock('JimLind\Pie7o\Tweet');
         $tweet->method('getMedia')->willReturn($stream);
 
         $this->fixture->upload($tweet);
     }
 
     /**
-     * Test GuzzleClient response is not 200
+     * Test GuzzleClient response is not 200.
      *
      * @expectedException JimLind\Pie7o\Pie7oException
      * @expectedExceptionMessage Could Not Upload Media: `Status Code Not 200`
@@ -153,18 +153,18 @@ class MediaUploaderTest extends PHPUnit_Framework_TestCase
         $this->guzzleClient->method('send')->willReturn($response);
 
         $stream = $this->getMock('Psr\Http\Message\StreamInterface');
-        $tweet  = $this->getMock('JimLind\Pie7o\Tweet');
+        $tweet = $this->getMock('JimLind\Pie7o\Tweet');
         $tweet->method('getMedia')->willReturn($stream);
 
         $this->fixture->upload($tweet);
     }
 
     /**
-     * Test GuzzleClient with good response
+     * Test GuzzleClient with good response.
      */
     public function testGuzzleClientResponseGood()
     {
-        $mediaId  = rand();
+        $mediaId = rand();
         $expected = rand();
 
         $response = $this->getMock('GuzzleHttp\Psr7\Response');
@@ -174,7 +174,7 @@ class MediaUploaderTest extends PHPUnit_Framework_TestCase
         $this->guzzleClient->method('send')->willReturn($response);
 
         $stream = $this->getMock('Psr\Http\Message\StreamInterface');
-        $tweet  = $this->getMock('JimLind\Pie7o\Tweet');
+        $tweet = $this->getMock('JimLind\Pie7o\Tweet');
         $tweet->method('getMedia')->willReturn($stream);
         $tweet->expects($this->once())->method('withMediaId')->with($mediaId)->willReturn($expected);
 

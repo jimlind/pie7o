@@ -1,4 +1,5 @@
 <?php
+
 namespace JimLind\Pie7o\Factory;
 
 use GuzzleHttp\Client;
@@ -8,12 +9,12 @@ use JimLind\Pie7o\StatusUpdater;
 use JimLind\Pie7o\Tweeter;
 
 /**
- * Factory for building a Tweeter
+ * Factory for building a Tweeter.
  */
 class TweeterFactory
 {
     /**
-     * Build a Tweeter
+     * Build a Tweeter.
      *
      * @param array $settingList
      *
@@ -22,7 +23,7 @@ class TweeterFactory
     public static function buildTweeter(array $settingList)
     {
         $authorizationBuilder = new AuthorizationBuilder($settingList);
-        $guzzleClient         = new Client();
+        $guzzleClient = new Client();
 
         $statusUpdater = new StatusUpdater($authorizationBuilder, $guzzleClient);
         $mediaUploader = new MediaUploader($authorizationBuilder, $guzzleClient);

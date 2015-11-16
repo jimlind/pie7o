@@ -1,23 +1,24 @@
 <?php
+
 require 'vendor/autoload.php';
 
 use JimLind\Pie7o\Pie7oException;
 use JimLind\Pie7o\Factory\TweetFactory;
 use JimLind\Pie7o\Factory\TweeterFactory;
 
-/**
+/*
  * Configure all the things
  */
 $tweeter = TweeterFactory::buildTweeter(
     [
-        'accessToken'       => 'YOUR ACCESS TOKEN',
+        'accessToken' => 'YOUR ACCESS TOKEN',
         'accessTokenSecret' => 'YOUR ACCESS TOKEN SECRET',
-        'consumerKey'       => 'YOUR CONSUMER KEY',
-        'consumerSecret'    => 'YOUR CONSUMER SECRET',
+        'consumerKey' => 'YOUR CONSUMER KEY',
+        'consumerSecret' => 'YOUR CONSUMER SECRET',
     ]
 );
 
-/**
+/*
  * Create a Tweet
  */
 $tweet = TweetFactory::buildTweet(
@@ -25,7 +26,7 @@ $tweet = TweetFactory::buildTweet(
     './cat.jpg'
 );
 
-/**
+/*
  * Tweet and catch exceptions
  */
 try {

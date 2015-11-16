@@ -1,8 +1,9 @@
 <?php
+
 namespace JimLind\Pie7o;
 
 /**
- * Update a status with the Twitter API
+ * Update a status with the Twitter API.
  */
 class StatusUpdater extends TwitterApiCaller
 {
@@ -17,7 +18,7 @@ class StatusUpdater extends TwitterApiCaller
     protected $apiPath = '/1.1/statuses/update.json';
 
     /**
-     * Attempt to update status and throw error if unsuccessful
+     * Attempt to update status and throw error if unsuccessful.
      *
      * @param Tweet $tweet
      *
@@ -33,7 +34,7 @@ class StatusUpdater extends TwitterApiCaller
     }
 
     /**
-     * Create options for a form submission
+     * Create options for a form submission.
      *
      * @param Tweet $tweet
      *
@@ -47,7 +48,7 @@ class StatusUpdater extends TwitterApiCaller
     }
 
     /**
-     * Get relevant properly sized data for using the Twitter API
+     * Get relevant properly sized data for using the Twitter API.
      *
      * @param Tweet $tweet
      *

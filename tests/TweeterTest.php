@@ -1,6 +1,6 @@
 <?php
 
-namespace JimLind\Pie7o\Tests;
+namespace JimLind\Pie7o\tests;
 
 use JimLind\Pie7o\MediaUploader;
 use JimLind\Pie7o\StatusUpdater;
@@ -8,7 +8,7 @@ use JimLind\Pie7o\Tweeter;
 use PHPUnit_Framework_TestCase;
 
 /**
- * Test the JimLind\Pie7o\Tweeter class
+ * Test the JimLind\Pie7o\Tweeter class.
  */
 class TweeterTest extends PHPUnit_Framework_TestCase
 {
@@ -41,7 +41,7 @@ class TweeterTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test a Tweet with no media
+     * Test a Tweet with no media.
      */
     public function testTweeterWithNoMedia()
     {
@@ -53,12 +53,12 @@ class TweeterTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test a Tweet with media
+     * Test a Tweet with media.
      */
     public function testTweeterWithMedia()
     {
         $stream = $this->getMock('Psr\Http\Message\StreamInterface');
-        $tweet  = $this->getMock('JimLind\Pie7o\Tweet');
+        $tweet = $this->getMock('JimLind\Pie7o\Tweet');
         $tweet->method('getMedia')->willReturn($stream);
 
         $taggedTweet = $this->getMock('JimLind\Pie7o\Tweet');

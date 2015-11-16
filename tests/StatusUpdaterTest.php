@@ -1,6 +1,6 @@
 <?php
 
-namespace JimLind\Pie7o\Tests;
+namespace JimLind\Pie7o\tests;
 
 use Exception;
 use GuzzleHttp\Exception\BadResponseException;
@@ -9,7 +9,7 @@ use JimLind\Pie7o\StatusUpdater;
 use PHPUnit_Framework_TestCase;
 
 /**
- * Test the JimLind\Pie7o\StatusUpdater class
+ * Test the JimLind\Pie7o\StatusUpdater class.
  */
 class StatusUpdaterTest extends PHPUnit_Framework_TestCase
 {
@@ -35,7 +35,7 @@ class StatusUpdaterTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test fixture has proper inheritance
+     * Test fixture has proper inheritance.
      */
     public function testInheritance()
     {
@@ -43,7 +43,7 @@ class StatusUpdaterTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test AuthorizationBuilder is called correctly
+     * Test AuthorizationBuilder is called correctly.
      *
      * Short circuit the output with an exception
      *
@@ -53,8 +53,8 @@ class StatusUpdaterTest extends PHPUnit_Framework_TestCase
     public function testAuthorizationBuilderCalled()
     {
         $method = 'POST';
-        $url    = 'https://api.twitter.com/1.1/statuses/update.json';
-        $post   = [
+        $url = 'https://api.twitter.com/1.1/statuses/update.json';
+        $post = [
             'status' => false,
         ];
 
@@ -62,7 +62,7 @@ class StatusUpdaterTest extends PHPUnit_Framework_TestCase
         $this->guzzleClient->method('send')->will($this->throwException(new Exception()));
 
         $stream = $this->getMock('Psr\Http\Message\StreamInterface');
-        $tweet  = $this->getMock('JimLind\Pie7o\Tweet');
+        $tweet = $this->getMock('JimLind\Pie7o\Tweet');
         $tweet->method('getMessage')->willReturn($stream);
         $tweet->method('getMediaId')->willReturn(0);
 
@@ -70,7 +70,7 @@ class StatusUpdaterTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test GuzzleClient is called correctly
+     * Test GuzzleClient is called correctly.
      *
      * Short circuit the output with an exception
      *
@@ -79,7 +79,7 @@ class StatusUpdaterTest extends PHPUnit_Framework_TestCase
      */
     public function testGuzzleClientSendCalledWithRequestAndOptions()
     {
-        $auth     = uniqid();
+        $auth = uniqid();
         $contents = uniqid();
 
         $this->authorizationBuilder->method('build')->willReturn($auth);
@@ -87,7 +87,7 @@ class StatusUpdaterTest extends PHPUnit_Framework_TestCase
         $stream = $this->getMock('Psr\Http\Message\StreamInterface');
         $stream->method('getContents')->willReturn($contents);
 
-        $tweet  = $this->getMock('JimLind\Pie7o\Tweet');
+        $tweet = $this->getMock('JimLind\Pie7o\Tweet');
         $tweet->method('getMessage')->willReturn($stream);
         $tweet->method('getMediaId')->willReturn(0);
 
@@ -102,7 +102,7 @@ class StatusUpdaterTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test GuzzleClient is called correctly including Media Id
+     * Test GuzzleClient is called correctly including Media Id.
      *
      * Short circuit the output with an exception
      *
@@ -111,16 +111,16 @@ class StatusUpdaterTest extends PHPUnit_Framework_TestCase
      */
     public function testGuzzleClientSendCalledWithRequestAndOptionsIncludingMediaId()
     {
-        $auth     = uniqid();
+        $auth = uniqid();
         $contents = uniqid();
-        $mediaId  = uniqid();
+        $mediaId = uniqid();
 
         $this->authorizationBuilder->method('build')->willReturn($auth);
 
         $stream = $this->getMock('Psr\Http\Message\StreamInterface');
         $stream->method('getContents')->willReturn($contents);
 
-        $tweet  = $this->getMock('JimLind\Pie7o\Tweet');
+        $tweet = $this->getMock('JimLind\Pie7o\Tweet');
         $tweet->method('getMessage')->willReturn($stream);
         $tweet->method('getMediaId')->willReturn($mediaId);
 
@@ -140,14 +140,14 @@ class StatusUpdaterTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test GuzzleClient throws a BadResponseException
+     * Test GuzzleClient throws a BadResponseException.
      *
      * @expectedException JimLind\Pie7o\Pie7oException
      * @expectedExceptionMessage Could Not Update Status: `Bad Response Exception Body`
      */
     public function testGuzzleClientBadResponseException()
     {
-        $request   = $this->getMock('Psr\Http\Message\RequestInterface');
+        $request = $this->getMock('Psr\Http\Message\RequestInterface');
         $response = $this->getMock('GuzzleHttp\Psr7\Response');
         $response->method('getBody')->willReturn('Bad Response Exception Body');
 
@@ -156,14 +156,14 @@ class StatusUpdaterTest extends PHPUnit_Framework_TestCase
         $this->guzzleClient->method('send')->will($this->throwException($exception));
 
         $stream = $this->getMock('Psr\Http\Message\StreamInterface');
-        $tweet  = $this->getMock('JimLind\Pie7o\Tweet');
+        $tweet = $this->getMock('JimLind\Pie7o\Tweet');
         $tweet->method('getMessage')->willReturn($stream);
 
         $this->fixture->update($tweet);
     }
 
     /**
-     * Test GuzzleClient throws an Exception
+     * Test GuzzleClient throws an Exception.
      *
      * @expectedException JimLind\Pie7o\Pie7oException
      * @expectedExceptionMessage Could Not Update Status: `Standard Exception Message`
@@ -174,14 +174,14 @@ class StatusUpdaterTest extends PHPUnit_Framework_TestCase
         $this->guzzleClient->method('send')->will($this->throwException($exception));
 
         $stream = $this->getMock('Psr\Http\Message\StreamInterface');
-        $tweet  = $this->getMock('JimLind\Pie7o\Tweet');
+        $tweet = $this->getMock('JimLind\Pie7o\Tweet');
         $tweet->method('getMessage')->willReturn($stream);
 
         $this->fixture->update($tweet);
     }
 
     /**
-     * Test GuzzleClient response is not 200
+     * Test GuzzleClient response is not 200.
      *
      * @expectedException JimLind\Pie7o\Pie7oException
      * @expectedExceptionMessage Could Not Update Status: `Status Code Not 200`
@@ -195,14 +195,14 @@ class StatusUpdaterTest extends PHPUnit_Framework_TestCase
         $this->guzzleClient->method('send')->willReturn($response);
 
         $stream = $this->getMock('Psr\Http\Message\StreamInterface');
-        $tweet  = $this->getMock('JimLind\Pie7o\Tweet');
+        $tweet = $this->getMock('JimLind\Pie7o\Tweet');
         $tweet->method('getMessage')->willReturn($stream);
 
         $this->fixture->update($tweet);
     }
 
     /**
-     * Test GuzzleClient with good response
+     * Test GuzzleClient with good response.
      */
     public function testGuzzleClientResponseGood()
     {
@@ -212,7 +212,7 @@ class StatusUpdaterTest extends PHPUnit_Framework_TestCase
         $this->guzzleClient->method('send')->willReturn($response);
 
         $stream = $this->getMock('Psr\Http\Message\StreamInterface');
-        $tweet  = $this->getMock('JimLind\Pie7o\Tweet');
+        $tweet = $this->getMock('JimLind\Pie7o\Tweet');
         $tweet->method('getMessage')->willReturn($stream);
 
         $actual = $this->fixture->update($tweet);

@@ -1,6 +1,6 @@
 <?php
 
-namespace JimLind\Pie7o\Tests;
+namespace JimLind\Pie7o\tests;
 
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Uri;
@@ -9,7 +9,7 @@ use PHPUnit_Framework_TestCase;
 use ReflectionClass;
 
 /**
- * Test the JimLind\Pie7o\TwitterApiCaller class
+ * Test the JimLind\Pie7o\TwitterApiCaller class.
  */
 class TwitterApiCallerTest extends PHPUnit_Framework_TestCase
 {
@@ -35,7 +35,7 @@ class TwitterApiCallerTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test sendTwitterRequest called with default post data
+     * Test sendTwitterRequest called with default post data.
      */
     public function testSendTwitterRequestWithDefaultPostData()
     {
@@ -46,11 +46,11 @@ class TwitterApiCallerTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test sendTwitterRequest called with default options
+     * Test sendTwitterRequest called with default options.
      */
     public function testSendTwitterRequestWithDefaultOptions()
     {
-        $uri     = (new Uri())->withScheme('https://');
+        $uri = (new Uri())->withScheme('https://');
         $request = (new Request('POST', $uri))
             ->withHeader('Authorization', null);
 

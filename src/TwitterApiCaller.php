@@ -1,4 +1,5 @@
 <?php
+
 namespace JimLind\Pie7o;
 
 use Exception;
@@ -9,7 +10,7 @@ use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Uri;
 
 /**
- * Communicate with the Twitter API
+ * Communicate with the Twitter API.
  */
 class TwitterApiCaller
 {
@@ -50,11 +51,11 @@ class TwitterApiCaller
     public function __construct(AuthorizationBuilder $authorizationBuilder, ClientInterface $guzzleClient)
     {
         $this->authorizationBuilder = $authorizationBuilder;
-        $this->guzzleClient         = $guzzleClient;
+        $this->guzzleClient = $guzzleClient;
     }
 
     /**
-     * Send the API request and ensure a Guzzle Response is returned
+     * Send the API request and ensure a Guzzle Response is returned.
      *
      * @param Tweet $tweet
      *
@@ -63,8 +64,8 @@ class TwitterApiCaller
     protected function sendTwitterRequest(Tweet $tweet)
     {
         $postData = $this->getPostData($tweet);
-        $request  = $this->buildRequest($postData);
-        $options  = $this->getOptions($tweet);
+        $request = $this->buildRequest($postData);
+        $options = $this->getOptions($tweet);
 
         try {
             $response = $this->guzzleClient->send($request, $options);
@@ -78,7 +79,7 @@ class TwitterApiCaller
     }
 
     /**
-     * Default empty array can be overwritten
+     * Default empty array can be overwritten.
      *
      * @return array
      */
@@ -88,7 +89,7 @@ class TwitterApiCaller
     }
 
     /**
-     * Default empty array can be overwritten
+     * Default empty array can be overwritten.
      *
      * @param Tweet $tweet
      *
@@ -100,7 +101,7 @@ class TwitterApiCaller
     }
 
     /**
-     * Build a Guzzle Request with an authorization header
+     * Build a Guzzle Request with an authorization header.
      *
      * @param array $postData
      *
@@ -110,14 +111,14 @@ class TwitterApiCaller
     {
         $uri = $this->buildURI();
 
-        $authorization   = $this->authorizationBuilder->build($this->apiMethod, (string) $uri, $postData);
+        $authorization = $this->authorizationBuilder->build($this->apiMethod, (string) $uri, $postData);
         $originalRequest = new Request($this->apiMethod, $uri);
 
         return $originalRequest->withHeader('Authorization', $authorization);
     }
 
     /**
-     * Build a URI for the Twitter API
+     * Build a URI for the Twitter API.
      *
      * @return Uri
      */

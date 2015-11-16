@@ -12,7 +12,7 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 
 /**
- * A Silex Service Provider for Pie7o
+ * A Silex Service Provider for Pie7o.
  */
 class Pie7oServiceProvider implements ServiceProviderInterface
 {
@@ -22,7 +22,7 @@ class Pie7oServiceProvider implements ServiceProviderInterface
     protected $logger;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -30,14 +30,14 @@ class Pie7oServiceProvider implements ServiceProviderInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function register(Application $app)
     {
         $app['pie7o.tweet'] = $app->protect(function ($message, $mediaPath = null) use ($app) {
             $settingList = $this->buildSettingsList($app);
-            $tweeter     = TweeterFactory::buildTweeter($settingList);
-            $tweet       = TweetFactory::buildTweet($message, $mediaPath);
+            $tweeter = TweeterFactory::buildTweeter($settingList);
+            $tweet = TweetFactory::buildTweet($message, $mediaPath);
 
             $this->logger = $this->getLogger($app);
             $this->logAttempt($message, $mediaPath, $tweet);
@@ -56,15 +56,14 @@ class Pie7oServiceProvider implements ServiceProviderInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function boot(Application $app)
     {
-
     }
 
     /**
-     * Attempt to find an acceptable logger in the container
+     * Attempt to find an acceptable logger in the container.
      *
      * @param Application $app
      *
@@ -80,7 +79,7 @@ class Pie7oServiceProvider implements ServiceProviderInterface
     }
 
     /**
-     * Build an array of settings for the TweeterFactory
+     * Build an array of settings for the TweeterFactory.
      *
      * @param Application $app
      *
@@ -88,7 +87,7 @@ class Pie7oServiceProvider implements ServiceProviderInterface
      */
     protected function buildSettingsList(Application $app)
     {
-        $keyList     = ['accessToken', 'accessTokenSecret', 'consumerKey', 'consumerSecret'];
+        $keyList = ['accessToken', 'accessTokenSecret', 'consumerKey', 'consumerSecret'];
         $settingList = array_fill_keys($keyList, '');
 
         foreach ($keyList as $key) {
@@ -100,24 +99,23 @@ class Pie7oServiceProvider implements ServiceProviderInterface
         return $settingList;
     }
 
-
     /**
-     * Log attempt at tweeting as info
+     * Log attempt at tweeting as info.
      *
      * @param string $message
      * @param string $mediaPath
-     * @param Tweet $tweet
+     * @param Tweet  $tweet
      */
     protected function logAttempt($message, $mediaPath, Tweet $tweet)
     {
-        $message  = 'Attempting to Tweet with message: `'.$message.'`';
+        $message = 'Attempting to Tweet with message: `'.$message.'`';
         $message .= $mediaPath ? ' with media id: `'.$tweet->getMediaId.'`' : '';
 
         $this->logger->info($message);
     }
 
     /**
-     * Log success of tweeting as info
+     * Log success of tweeting as info.
      */
     protected function logSuccess()
     {
@@ -125,7 +123,7 @@ class Pie7oServiceProvider implements ServiceProviderInterface
     }
 
     /**
-     * Log failure of tweeting and why as error
+     * Log failure of tweeting and why as error.
      *
      * @param Pie7oException $exception
      */

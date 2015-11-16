@@ -1,4 +1,5 @@
 <?php
+
 require 'vendor/autoload.php';
 
 use GuzzleHttp\Client;
@@ -10,24 +11,24 @@ use JimLind\Pie7o\StatusUpdater;
 use JimLind\Pie7o\Tweet;
 use JimLind\Pie7o\Tweeter;
 
-/**
+/*
  * Configure all the things
  */
 $settingList = [
-    'accessToken'       => 'YOUR ACCESS TOKEN',
+    'accessToken' => 'YOUR ACCESS TOKEN',
     'accessTokenSecret' => 'YOUR ACCESS TOKEN SECRET',
-    'consumerKey'       => 'YOUR CONSUMER KEY',
-    'consumerSecret'    => 'YOUR CONSUMER SECRET',
+    'consumerKey' => 'YOUR CONSUMER KEY',
+    'consumerSecret' => 'YOUR CONSUMER SECRET',
 ];
 
 $authorizationBuilder = new AuthorizationBuilder($settingList);
-$guzzleClient         = new Client();
+$guzzleClient = new Client();
 
 $statusUpdater = new StatusUpdater($authorizationBuilder, $guzzleClient);
 $mediaUploader = new MediaUploader($authorizationBuilder, $guzzleClient);
-$tweeter       = new Tweeter($statusUpdater, $mediaUploader);
+$tweeter = new Tweeter($statusUpdater, $mediaUploader);
 
-/**
+/*
  * Create a Tweet
  */
 $messageHandle = fopen('php://temp', 'r+');
@@ -38,11 +39,11 @@ $messageStream->rewind();
 $mediaHandle = fopen('./cat.jpg', 'r');
 $mediaStream = new Stream($mediaHandle);
 
-$tweet = (new Tweet)
+$tweet = (new Tweet())
     ->withMessage($messageStream)
     ->withMedia($mediaStream);
 
-/**
+/*
  * Tweet and catch exceptions
  */
 try {

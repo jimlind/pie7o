@@ -5,7 +5,7 @@ namespace JimLind\Pie7o\Factory\Tests;
 use JimLind\Pie7o\Factory\TweeterFactory;
 
 /**
- * Test the JimLind\Pie7o\Factory\TweeterFactory class
+ * Test the JimLind\Pie7o\Factory\TweeterFactory class.
  */
 class TweeterFactoryTest extends \PHPUnit_Framework_TestCase
 {

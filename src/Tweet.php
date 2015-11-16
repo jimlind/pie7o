@@ -1,10 +1,11 @@
 <?php
+
 namespace JimLind\Pie7o;
 
 use Psr\Http\Message\StreamInterface;
 
 /**
- * Immutable data object for all Tweet information
+ * Immutable data object for all Tweet information.
  */
 class Tweet
 {
@@ -24,7 +25,7 @@ class Tweet
     protected $mediaId = 0;
 
     /**
-     * Return a Tweet with added message stream
+     * Return a Tweet with added message stream.
      *
      * @param StreamInterface $messageStream
      *
@@ -39,7 +40,7 @@ class Tweet
     }
 
     /**
-     * Get the message stream
+     * Get the message stream.
      *
      * @return StreamInterface
      */
@@ -49,7 +50,7 @@ class Tweet
     }
 
     /**
-     * Return a Tweet with added media stream
+     * Return a Tweet with added media stream.
      *
      * @param StreamInterface $mediaStream
      *
@@ -64,7 +65,7 @@ class Tweet
     }
 
     /**
-     * Get the media stream
+     * Get the media stream.
      *
      * @return StreamInterface
      */
@@ -74,7 +75,7 @@ class Tweet
     }
 
     /**
-     * Return a Tweet with added media id
+     * Return a Tweet with added media id.
      *
      * @param int $mediaId
      *
@@ -89,7 +90,7 @@ class Tweet
     }
 
     /**
-     * Get the media id
+     * Get the media id.
      *
      * @return int
      */

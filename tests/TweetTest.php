@@ -1,12 +1,12 @@
 <?php
 
-namespace JimLind\Pie7o\Tests;
+namespace JimLind\Pie7o\tests;
 
 use JimLind\Pie7o\Tweet;
 use PHPUnit_Framework_TestCase;
 
 /**
- * Test the JimLind\Pie7o\Tweet class
+ * Test the JimLind\Pie7o\Tweet class.
  */
 class TweetTest extends PHPUnit_Framework_TestCase
 {
@@ -21,7 +21,7 @@ class TweetTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test an empty Tweet has not data
+     * Test an empty Tweet has not data.
      */
     public function testEmptyTweet()
     {
@@ -31,7 +31,7 @@ class TweetTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test giving a Tweet a message stream allows you to get it
+     * Test giving a Tweet a message stream allows you to get it.
      */
     public function testMessageSetGet()
     {
@@ -50,7 +50,7 @@ class TweetTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test giving a Tweet a media stream allows you to get it
+     * Test giving a Tweet a media stream allows you to get it.
      */
     public function testMediaSetGet()
     {
@@ -69,13 +69,13 @@ class TweetTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test giving a Tweet a media id allows you to get it
+     * Test giving a Tweet a media id allows you to get it.
      */
     public function testMediaIdSetGet()
     {
-        $mediaId     = rand();
+        $mediaId = rand();
         $mediaString = (string) $mediaId;
-        $output      = $this->fixture->withMediaId($mediaString);
+        $output = $this->fixture->withMediaId($mediaString);
 
         $this->assertSame($mediaId, $output->getMediaId());
 

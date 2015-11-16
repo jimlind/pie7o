@@ -1,15 +1,16 @@
 <?php
+
 require 'vendor/autoload.php';
 
 $app = new Silex\Application();
 $app->register(
     new JimLind\Pie7o\Silex\Pie7oServiceProvider(),
     [
-        'twitter.accessToken'       => 'YOUR ACCESS TOKEN',
+        'twitter.accessToken' => 'YOUR ACCESS TOKEN',
         'twitter.accessTokenSecret' => 'YOUR ACCESS TOKEN SECRET',
-        'twitter.consumerKey'       => 'YOUR CONSUMER KEY',
-        'twitter.consumerSecret'    => 'YOUR CONSUMER SECRET',
-        'pie7o.logger'              => new Psr\Log\NullLogger(),
+        'twitter.consumerKey' => 'YOUR CONSUMER KEY',
+        'twitter.consumerSecret' => 'YOUR CONSUMER SECRET',
+        'pie7o.logger' => new Psr\Log\NullLogger(),
     ]
 );
 

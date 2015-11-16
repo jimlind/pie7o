@@ -1,19 +1,19 @@
 <?php
 
-namespace JimLind\Pie7o\Tests;
+namespace JimLind\Pie7o\tests;
 
 use JimLind\Pie7o\AuthorizationBuilder;
 use phpmock\phpunit\PHPMock;
 
 /**
- * Test the JimLind\Pie7o\AuthorizationBuilder class
+ * Test the JimLind\Pie7o\AuthorizationBuilder class.
  */
 class AuthorizationBuilderTest extends \PHPUnit_Framework_TestCase
 {
     use PHPMock;
 
     /**
-     * Test a variety of input data that is insufficiant
+     * Test a variety of input data that is insufficiant.
      *
      * @expectedException        JimLind\Pie7o\Pie7oException
      * @expectedExceptionMessage Missing a setting for authorization.
@@ -28,16 +28,16 @@ class AuthorizationBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Data provider of insufficiant AuthorizationBuilder input
+     * Data provider of insufficiant AuthorizationBuilder input.
      *
      * @return array
      */
     public function authorizationBuilderConstructExceptionProvider()
     {
-        $empty  = [];
-        $aToken  = ['accessToken' => uniqid()];
+        $empty = [];
+        $aToken = ['accessToken' => uniqid()];
         $aSecret = ['accessTokenSecret' => uniqid()];
-        $cKey    = ['consumerKey' => uniqid()];
+        $cKey = ['consumerKey' => uniqid()];
         $cSecret = ['consumerSecret' => uniqid()];
 
         return [
@@ -50,7 +50,7 @@ class AuthorizationBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test that the output of the AuthorizationBuilder is what we expect
+     * Test that the output of the AuthorizationBuilder is what we expect.
      *
      * @dataProvider authorizationBuilderProvider
      *
@@ -63,24 +63,24 @@ class AuthorizationBuilderTest extends \PHPUnit_Framework_TestCase
         $mockTime->expects($this->any())->willReturn($time);
 
         $settingList = [
-            'accessToken'       => 'YOUR ACCESS TOKEN',
+            'accessToken' => 'YOUR ACCESS TOKEN',
             'accessTokenSecret' => 'YOUR ACCESS TOKEN SECRET',
-            'consumerKey'       => 'YOUR CONSUMER KEY',
-            'consumerSecret'    => 'YOUR CONSUMER SECRET',
+            'consumerKey' => 'YOUR CONSUMER KEY',
+            'consumerSecret' => 'YOUR CONSUMER SECRET',
         ];
 
         $builder = new AuthorizationBuilder($settingList);
 
         $method = 'METHOD';
-        $uri    = 'URI';
-        $post   = ['POST VALUE' => 'POST DATA'];
+        $uri = 'URI';
+        $post = ['POST VALUE' => 'POST DATA'];
         $actual = $builder->build($method, $uri, $post);
 
         $this->assertEquals($expected, $actual);
     }
 
     /**
-     * Data provider of AuthorizationBuilder output test
+     * Data provider of AuthorizationBuilder output test.
      *
      * @return array
      */
@@ -93,10 +93,11 @@ class AuthorizationBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Fill static pieces of authorization string with some input
+     * Fill static pieces of authorization string with some input.
      *
      * @param int    $time
      * @param string $signature
+     *
      * @return string
      */
     protected function createMockResponse($time, $signature)

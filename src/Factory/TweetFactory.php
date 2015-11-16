@@ -1,18 +1,18 @@
 <?php
+
 namespace JimLind\Pie7o\Factory;
 
 use GuzzleHttp\Psr7\Stream;
-use JimLind\Pie7o\AuthorizationBuilder;
 use JimLind\Pie7o\Pie7oException;
 use JimLind\Pie7o\Tweet;
 
 /**
- * Factory for building tweet objects
+ * Factory for building tweet objects.
  */
 class TweetFactory
 {
     /**
-     * Build a Tweet
+     * Build a Tweet.
      *
      * @param string $message
      * @param string $mediaPath Optional
@@ -36,7 +36,7 @@ class TweetFactory
     }
 
     /**
-     * Build a message stream from a string
+     * Build a message stream from a string.
      *
      * @param string $message
      *
@@ -53,7 +53,7 @@ class TweetFactory
     }
 
     /**
-     * Build a media stream from a filepath
+     * Build a media stream from a filepath.
      *
      * @param string $mediaPath
      *

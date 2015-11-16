@@ -1,8 +1,9 @@
 <?php
+
 namespace JimLind\Pie7o;
 
 /**
- * Build an Oauth 1 string for the Twitter API
+ * Build an Oauth 1 string for the Twitter API.
  */
 class AuthorizationBuilder
 {
@@ -44,14 +45,14 @@ class AuthorizationBuilder
             throw new Pie7oException('Missing a setting for authorization.');
         }
 
-        $this->accessToken       = $settingList['accessToken'];
+        $this->accessToken = $settingList['accessToken'];
         $this->accessTokenSecret = $settingList['accessTokenSecret'];
-        $this->consumerKey       = $settingList['consumerKey'];
-        $this->consumerSecret    = $settingList['consumerSecret'];
+        $this->consumerKey = $settingList['consumerKey'];
+        $this->consumerSecret = $settingList['consumerSecret'];
     }
 
     /**
-     * Create a complete OAuth authorization string
+     * Create a complete OAuth authorization string.
      *
      * @param string $method
      * @param string $uri
@@ -61,7 +62,7 @@ class AuthorizationBuilder
      */
     public function build($method, $uri, array $postData)
     {
-        $rawAuthDataList     = $this->buildValueList($method, $uri, $postData);
+        $rawAuthDataList = $this->buildValueList($method, $uri, $postData);
         $encodedAuthDataList = array_map('rawurlencode', $rawAuthDataList);
 
         $authStringList = [];
@@ -73,27 +74,27 @@ class AuthorizationBuilder
     }
 
     /**
-     * Create a list of values needed for authentication
+     * Create a list of values needed for authentication.
      *
      * @param string $method
      * @param string $uri
-     * @param array $postData
+     * @param array  $postData
      *
      * @return array
      */
     protected function buildValueList($method, $uri, array $postData)
     {
         $queryData = [
-            'oauth_consumer_key'     => $this->consumerKey,
-            'oauth_nonce'            => time(),
+            'oauth_consumer_key' => $this->consumerKey,
+            'oauth_nonce' => time(),
             'oauth_signature_method' => 'HMAC-SHA1',
-            'oauth_timestamp'        => time(),
-            'oauth_token'            => $this->accessToken,
-            'oauth_version'          => '1.0',
+            'oauth_timestamp' => time(),
+            'oauth_token' => $this->accessToken,
+            'oauth_version' => '1.0',
         ];
 
         $message = $this->buildMessage($queryData, $method, $uri, $postData);
-        $key     = $this->buildKey();
+        $key = $this->buildKey();
 
         $queryData['oauth_signature'] = base64_encode(hash_hmac('sha1', $message, $key, true));
 
@@ -101,12 +102,12 @@ class AuthorizationBuilder
     }
 
     /**
-     * Create an escaped string with the message getting encoded
+     * Create an escaped string with the message getting encoded.
      *
-     * @param array $queryData
+     * @param array  $queryData
      * @param string $method
      * @param string $uri
-     * @param array $postData
+     * @param array  $postData
      *
      * @return string
      */
@@ -116,20 +117,20 @@ class AuthorizationBuilder
         ksort($queryData);
 
         $queryString = http_build_query($queryData, '', '&', PHP_QUERY_RFC3986);
-        $valueList   = [$method, $uri, $queryString];
+        $valueList = [$method, $uri, $queryString];
         $encodedList = array_map('rawurlencode', $valueList);
 
         return implode('&', $encodedList);
     }
 
     /**
-     * Create an escaped string with the keys used for encoding
+     * Create an escaped string with the keys used for encoding.
      *
      * @return string
      */
     protected function buildKey()
     {
-        $valueList     = [$this->consumerSecret, $this->accessTokenSecret];
+        $valueList = [$this->consumerSecret, $this->accessTokenSecret];
         $encodedList = array_map('rawurlencode', $valueList);
 
         return implode('&', $encodedList);
